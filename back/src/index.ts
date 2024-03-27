@@ -1,2 +1,6 @@
-const count:number = 665;
-console.log('count %d', count)
+import server from "./server";
+import { PORT } from "./config/envs";
+
+server.listen(PORT, () => {
+    console.log(`Estoy escuchando en el puerto ${PORT}`)
+})
