@@ -11,7 +11,8 @@ interface IAppoimtment {
     status: AppointmentStatus
 }
 
-export default IAppoimtment;
+export { IAppoimtment, AppointmentStatus };
+
 
 /*
 
