@@ -3,7 +3,7 @@ import IUser from "../interfaces/IUsers";
 
 let users: IUser[] = [];
 
-const id: string = "1234";
+const id: number = 1234;
 
 
 export const createUserServices = async (userData: UserDto): Promise<IUser> => {
@@ -14,9 +14,11 @@ export const createUserServices = async (userData: UserDto): Promise<IUser> => {
 
     const newUser: IUser = {
         id,
-        userName: userData.userName,
-        userEmail: userData.userEmail,
-        userPhone: userData.userPhone
+        name: userData.name,
+        email: userData.email,
+        birthdate: userData.birthdate,
+        nDni: userData.nDni,
+        credentialId: userData.credentialId
     }
 
     users.push(newUser);
@@ -27,8 +29,8 @@ export const getUserServices = async (): Promise<IUser[]> => {
     return users;
 }
 
-export const deleteUserServices = async (id: string): Promise<void> => {
-    users = users.filter((user) => {
+export const deleteUserServices = async (id: number): Promise<void> => {
+    users = users.filter((user: IUser) => {
         return user.id !== id;
     })
 }

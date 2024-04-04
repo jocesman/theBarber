@@ -10,7 +10,10 @@
     "start": "nodemon"
   },
   "keywords": [],
-  "author": "Jose Cespedes",
+  "author": {
+    "name" : "Jose Cespedes",
+    "email" : "jicespedes1976@gmail.com"
+  },
   "license": "ISC",
   "devDependencies": {
     "@types/express": "^4.17.21",
