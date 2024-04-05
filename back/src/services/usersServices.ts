@@ -1,5 +1,6 @@
-import { log } from "console";
+import { AppDataSource } from "../config/data-source";
 import UserDto from "../dto/UserDto";
+import { User } from "../entities/Users";
 import IUser from "../interfaces/IUsers";
 
 let users: IUser[] = [];
@@ -7,7 +8,7 @@ let users: IUser[] = [];
 let id: number = 1234;
 
 
-export const createUserServices = async (userData: UserDto): Promise<IUser> => {
+export const createUserServices = async (userData: UserDto) => {
     // recibo los datos del usuario
     // creo un nuevo usuario
     // incluir el nuevo usuario en el arreglo
@@ -33,7 +34,8 @@ export const getUserById = async (id: number): Promise<IUser[]> => {
     return user;
 }
 
-export const getUserServices = async (): Promise<IUser[]> => {
+export const getUserServices = async () => {
+    const users = await AppDataSource.getRepository(User).find();
     return users;
 }
 
@@ -42,3 +44,28 @@ export const deleteUserServices = async (id: number): Promise<void> => {
         return user.id !== id;
     });
 } 
+
+/*
+export const getUserServices = async (): Promise<IUser[]> => {
+    return users;
+}
+
+export const createUserServices = async (userData: UserDto): Promise<IUser> => {
+    // recibo los datos del usuario
+    // creo un nuevo usuario
+    // incluir el nuevo usuario en el arreglo
+    // retornar el objeto creado
+    id++;
+    const newUser: IUser = {
+        id,
+        name: userData.name,
+        email: userData.email,
+        birthdate: userData.birthdate,
+        nDni: userData.nDni,
+        credentialId: userData.credentialId
+    }
+
+    users.push(newUser);
+    return newUser;
+}
+*/

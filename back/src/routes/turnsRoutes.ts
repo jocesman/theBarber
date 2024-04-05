@@ -5,8 +5,8 @@ import { getAllTurns, getTurnById, schedule, cancel} from "../controllers/turnCo
 const turnsRoutes: Router = Router();
 
 turnsRoutes.get("/", getAllTurns);
-turnsRoutes.get("/id", getTurnById);
+turnsRoutes.get("/:id", getTurnById);
 turnsRoutes.post("/schedule", schedule);
-turnsRoutes.post("/cancel", cancel);
+turnsRoutes.post("/cancel/:id", cancel);
 
-export default turnsRoutes;
+export default turnsRoutes; 

@@ -11,8 +11,8 @@
   },
   "keywords": [],
   "author": {
-    "name" : "Jose Cespedes",
-    "email" : "jicespedes1976@gmail.com"
+    "name": "Jose Cespedes",
+    "email": "jicespedes1976@gmail.com"
   },
   "license": "ISC",
   "devDependencies": {
@@ -31,6 +31,9 @@
   "dependencies": {
     "body-parser": "^1.20.2",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "pg": "^8.11.5",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.20"
   }
 }
