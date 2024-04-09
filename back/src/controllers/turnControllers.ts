@@ -1,10 +1,11 @@
 import { Request, Response } from "express"; 
 import { IAppoimtment } from "../interfaces/IAppointment";
 import { createTurnsServices, getTurnServices, getTurnServiceById, deleteTurnServices } from "../services/appointmentService"
+import { Appointment } from "../entities/Appointment";
 
 export const getAllTurns = async (req: Request, res: Response) => {
     //res.send ('Vamos a obtener todos los turnos');
-    const turns: IAppoimtment[] = await getTurnServices();
+    const turns: Appointment[] = await getTurnServices();
     res.status(200).json(turns);
 };
 

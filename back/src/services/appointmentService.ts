@@ -1,9 +1,25 @@
 import AppoimtmentDto from "../dto/AppointmentDto";
 import { IAppoimtment } from "../interfaces/IAppointment";
+import { Appointment } from "../entities/Appointment";
+import { AppDataSource } from "../config/data-source";
+import { User } from "../entities/Users";
 
 let turns: IAppoimtment[] = [];
 
 let id: number = 1234;
+
+export const getTurnServices = async (): Promise<Appointment[]> => {
+    const turns = await AppDataSource.getRepository(Appointment).find({
+        relations:{
+            user: true
+        }
+});
+    return turns;
+}
+
+
+
+
 
 export const createTurnsServices = async (turnData: AppoimtmentDto): Promise<IAppoimtment> => {
     // recibo los datos del usuario
@@ -23,9 +39,7 @@ export const createTurnsServices = async (turnData: AppoimtmentDto): Promise<IAp
     return newTurn;
 }
 
-export const getTurnServices = async (): Promise<IAppoimtment[]> => {
-    return turns;
-}
+
 
 export const getTurnServiceById = async (id: number): Promise<IAppoimtment[]> => {
     const turn: IAppoimtment[] = turns.filter((turn: IAppoimtment) => {

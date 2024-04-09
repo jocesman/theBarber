@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm"
+import { Credential } from "./Credential"
+import { Appointment } from "./Appointment"
 
 
 @Entity({
@@ -6,7 +8,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
 })
 export class User {
     @PrimaryGeneratedColumn()
-    id: number
+        userId: number
 
     @Column({
         length: 100
@@ -24,6 +26,10 @@ export class User {
 
     @Column()
     credentialId: number
+
+    @OneToMany (() => Appointment, (appointment) => appointment.user)
+        appointment: Appointment[]
+    
 }
 
 

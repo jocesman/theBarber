@@ -8,53 +8,48 @@ let users: IUser[] = [];
 let id: number = 1234;
 
 
-export const createUserServices = async (userData: UserDto) => {
-    // recibo los datos del usuario
-    // creo un nuevo usuario
-    // incluir el nuevo usuario en el arreglo
-    // retornar el objeto creado
-    id++;
-    const newUser: IUser = {
-        id,
-        name: userData.name,
-        email: userData.email,
-        birthdate: userData.birthdate,
-        nDni: userData.nDni,
-        credentialId: userData.credentialId
-    }
-
-    users.push(newUser);
-    return newUser;
+export const getUserServices = async () => {
+    const users = await AppDataSource.getRepository(User).find({
+        relations: {
+            appointment: true
+        }
+    });
+    return users;
 }
+
+
+
+
+
+
+/*
 
 export const getUserById = async (id: number): Promise<IUser[]> => {
     const user: IUser[] = users.filter((user: IUser) => {
         if (user.id === id) return user;        
     });
-    return user;
+    return user
+
+    //const newUser = await AppDataSource(userData);
+    //await AppDataSource.save(newUser);
+
+    //return console.log('Hello WOrld');
+    
+
 }
 
-export const getUserServices = async () => {
-    const users = await AppDataSource.getRepository(User).find();
-    return users;
-}
 
 export const deleteUserServices = async (id: number): Promise<void> => {
     users = users.filter((user: IUser) => {
         return user.id !== id;
     });
 } 
-
-/*
-export const getUserServices = async (): Promise<IUser[]> => {
-    return users;
-}
-
-export const createUserServices = async (userData: UserDto): Promise<IUser> => {
+export const createUserServices = async (userData: User) => {
     // recibo los datos del usuario
     // creo un nuevo usuario
     // incluir el nuevo usuario en el arreglo
     // retornar el objeto creado
+    /*
     id++;
     const newUser: IUser = {
         id,
@@ -69,3 +64,27 @@ export const createUserServices = async (userData: UserDto): Promise<IUser> => {
     return newUser;
 }
 */
+
+//export const getUserServices = async (): Promise<IUser[]> => {
+//    return users;
+//}
+
+/*export const createUserServices = async (userData: UserDto): Promise<IUser> => {
+    // recibo los datos del usuario
+    // creo un nuevo usuario
+    // incluir el nuevo usuario en el arreglo
+    // retornar el objeto creado
+    id++;
+    const newUser: IUser = {
+        id,
+        name: userData.name,
+        email: userData.email,
+        birthdate: userData.birthdate,
+        nDni: userData.nDni,
+        credentialId: userData.credentialId
+    }
+
+    users.push(newUser);
+    return newUser;
+}
+}*/
