@@ -1,9 +1,9 @@
 enum AppointmentStatus {
-    Active = "active",
-    Cancelled = "cancelled"
+    Active = "Active",
+    Cancelled = "Cancelled"
   }
   
-interface IAppoimtment {
+interface IAppointment {
     id: number,
     date: Date,
     time: Date,
@@ -11,7 +11,7 @@ interface IAppoimtment {
     status: AppointmentStatus
 }
 
-export { IAppoimtment, AppointmentStatus };
+export { IAppointment, AppointmentStatus };
 
 
 /*

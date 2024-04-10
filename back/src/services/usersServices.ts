@@ -3,6 +3,8 @@ import UserDto from "../dto/UserDto";
 import { User } from "../entities/Users";
 import IUser from "../interfaces/IUsers";
 
+
+
 let users: IUser[] = [];
 
 let id: number = 1234;
@@ -17,8 +19,37 @@ export const getUserServices = async () => {
     return users;
 }
 
+export const createUserServices = async (userData: User) => {
 
+    //const newUser: User = await AppDataSource.setOptions(userData);
+    const newUser = new User();
+    newUser.name = userData.name;
+    newUser.email = userData.email;
+    newUser.birthdate = userData.birthdate;
+    newUser.nDni = userData.nDni;
+    newUser.credentialId = userData.credentialId;
+  
+    await AppDataSource.manager.save(newUser);
+  
+    return(newUser);
+};    
 
+export const getUserByIdService = async (id: number) => {
+    const userById = await AppDataSource.manager.findOneBy(User, { userId: id });
+    return userById;
+
+    /*users.filter((user: IUser) => {
+        if (user.id === id) return user;        
+    });
+    return user*/
+
+    //const newUser = await AppDataSource(userData);
+    //await AppDataSource.save(newUser);
+
+    //return console.log('Hello WOrld');
+    
+
+}
 
 
 

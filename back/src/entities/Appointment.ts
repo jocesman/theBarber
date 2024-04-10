@@ -23,6 +23,7 @@ export class Appointment {
     @ManyToOne (() => User, (user) => user.appointment)
         user: User;
 
+
 }
 
 

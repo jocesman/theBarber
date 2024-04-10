@@ -1,7 +1,7 @@
 
 import { Request, Response } from "express";
 import IUser from "../interfaces/IUsers";
-import { getUserServices } from "../services/usersServices"
+import { getUserServices, createUserServices, getUserByIdService } from "../services/usersServices"
 import { User } from "../entities/Users";
 
 export const getAllUsers = async (req: Request, res: Response) => {
@@ -9,6 +9,19 @@ export const getAllUsers = async (req: Request, res: Response) => {
     res.status(200).json(users);
 };
 
+export const register = async(req: Request, res: Response) => {
+    const newUser = req.body;
+    await createUserServices(newUser);
+    res.status(201).json(newUser);
+};
+
+export const getUsersById = async(req: Request, res: Response) => {
+    const { id } = req.params;
+    const idConsulta: number = parseInt(id);
+    const user = await getUserByIdService(idConsulta);
+    if (user == null)  res.status(400).json({"message":"Usuario no encontrado"});
+    else res.status(200).json(user);
+};
 
 
 
