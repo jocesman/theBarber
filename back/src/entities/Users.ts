@@ -24,12 +24,23 @@ export class User {
     @Column()
     nDni: number
 
-    @Column()
-    credentialId: number
+    //@Column()
+    //credentialId: number
 
-    @OneToMany (() => Appointment, (appointment) => appointment.user)
-        appointment: Appointment[]
+   // @OneToMany (() => Appointment, (appointment) => appointment.user, { cascade: true })
+    //    appointment: Appointment[]
     
+   // @OneToOne(() => Credential, (credential) => credential.user, { cascade: true })
+   // @JoinColumn()
+   //     credential: Credential
+    //
+    @OneToOne(() => Credential, { cascade: true })
+    @JoinColumn()
+    credential: Credential;
+
+    @OneToMany(() => Appointment, (appointment) => appointment.user, { cascade: true })
+    appointment: Appointment[];
+
 }
 
 
