@@ -24,7 +24,7 @@ export class Credential {
     @UpdateDateColumn({ name: 'updated_at' }) // Decorador UpdateDateColumn
     updatedAt: Date; // Esta propiedad almacenará la fecha y hora de la última actualización del usuario
 
-    @OneToOne (() => User, (user) => user.credential)
-    @JoinColumn()
-        user: User
+    //@OneToOne (() => User, (user) => user.credential)
+    //@JoinColumn()
+    //    user: User
 }

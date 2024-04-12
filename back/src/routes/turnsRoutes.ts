@@ -7,6 +7,6 @@ const turnsRoutes: Router = Router();
 turnsRoutes.get("/", getAllTurns);
 turnsRoutes.get("/:id", getTurnById);
 turnsRoutes.post("/schedule", schedule);
-turnsRoutes.post("/cancel/:id", cancel);
+turnsRoutes.put("/cancel/:id", cancel);
 
 export default turnsRoutes; 

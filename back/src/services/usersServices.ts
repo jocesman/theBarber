@@ -71,5 +71,22 @@ export const deleteUserServices = async (id: number): Promise<boolean> => {
     
     return true;
 }
+
+export const bajaTemporalUserServices = async (id:number): Promise<boolean> => {
+    const userDown = await AppDataSource.getRepository(User);
+    const credDown = await AppDataSource.getRepository(Credential);
+
+    const user = await userDown.findOne({
+        where: { userId: id },
+        relations: ['credential'] 
+    });
+
+    if (!user) return false;
+
+    user.credential.active = false;
+    await credDown.save(user.credential);
+
+    return true;
+}
     
    

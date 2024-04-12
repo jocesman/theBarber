@@ -1,8 +1,6 @@
 import { Request, Response } from "express"; 
-import { IAppointment } from "../interfaces/IAppointment";
-import { createTurnsServices, getTurnServices, getTurnServiceById, deleteTurnServices } from "../services/appointmentService"
+import { createTurnsServices, getTurnServices, getTurnServiceById, cancelTurnServices } from "../services/appointmentService"
 import { Appointment } from "../entities/Appointment";
-import { User } from "../entities/Users";
 
 export const getAllTurns = async (req: Request, res: Response) => {
     //res.send ('Vamos a obtener todos los turnos');
@@ -11,26 +9,25 @@ export const getAllTurns = async (req: Request, res: Response) => {
 };
 
 export const getTurnById = async(req: Request, res: Response) => {
-    //res.send ('Vamos a obtener un turno por ID');
     const { id } = req.params;
     const idConsulta: number = parseInt(id);
-    const turn: IAppointment[] = await getTurnServiceById(idConsulta);
+    const turn = await getTurnServiceById(idConsulta);
+    if (turn == null)  res.status(400).json({"message":"Turno no encontrado"});
     res.status(200).json(turn);
 };
 
 export const schedule = async(req: Request, res: Response) => {
-    //res.send ('Vamos a agendar un turno');
-    const { id, userId, date, time, status } = req.body
-    //const newTurn: Appointment = await createTurnsServices({ date, time, status});
-    //const newTurn: IAppointment = await createTurnsServices({ appointmentId, userId, date, time, status });
-    //res.status(201).json(newTurn);
+    const { id, date, time } = req.body;
+    const respuesta = await createTurnsServices({ id, date, time });
+    if (respuesta) res.status(201).json('Turno creado con exito');
+    else res.status(400).json('Turno no se pudo crear, favor revisar / Usuario inexistente')
 };
 
 export const cancel = async(req: Request, res: Response) => {
-    //res.send ('Vamos a cancelar un turno');
     const { id } = req.params;
     const idConsulta: number = parseInt(id);
-    await deleteTurnServices(idConsulta);
-    res.status(200).json('Operación completada');
+    const respuesta: boolean = await cancelTurnServices(idConsulta);
+    if (respuesta) res.status(200).json('Operación completada');
+    else res.status(400).json('Turno no existe');
 };
 

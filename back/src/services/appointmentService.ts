@@ -1,8 +1,9 @@
 import AppoimtmentDto from "../dto/AppointmentDto";
-import { IAppointment } from "../interfaces/IAppointment";
+import { AppointmentStatus, IAppointment } from "../interfaces/IAppointment";
 import { Appointment } from "../entities/Appointment";
 import { AppDataSource } from "../config/data-source";
 import { User } from "../entities/Users";
+import { time } from "console";
 
 let turns: IAppointment[] = [];
 
@@ -17,45 +18,67 @@ export const getTurnServices = async (): Promise<Appointment[]> => {
     return turns;
 }
 
-export const createTurnsServices = async (turnData: Appointment): Promise<IAppointment> => {
+export const createTurnsServices = async ( turndata: any): Promise<boolean> => {
+    const user = await AppDataSource.manager.getRepository(User); 
+    const turn = await AppDataSource.manager.getRepository(Appointment);
+    const userApp = await user.findOne({
+        where: {
+            userId: turndata.id
+        }
+    });
+
+    if (!userApp) return false;
+
+    const newTurn = new Appointment();
     
-    //const newTurn = await AppDataSource.save (turnData)
+
+    // Suponiendo que turndata.time es una cadena de texto que representa la hora en formato HH:MM:SS
+    const horaMinutoSegundo = turndata.time.split(':'); // Dividir la cadena en horas, minutos y segundos
+
+    // Obtener la fecha actual
+    const fechaActual = new Date();
+
+    // Crear un nuevo objeto Date con los componentes de la hora y fecha actual
+    const nuevaFechaHora = new Date(
+    fechaActual.getFullYear(),
+    fechaActual.getMonth(),
+    fechaActual.getDate(),
+    parseInt(horaMinutoSegundo[0]), // Horas
+    parseInt(horaMinutoSegundo[1]), // Minutos
+    parseInt(horaMinutoSegundo[2])  // Segundos
+    );
+
+    // Asignar el objeto Date al nuevo objeto Turn
+    newTurn.date = turndata.date;
+    newTurn.time = nuevaFechaHora;
+    newTurn.status = AppointmentStatus.Active;
+    newTurn.user = userApp;
+
+    await turn.save(newTurn);
     
-    
-    // recibo los datos del usuario
-    // creo un nuevo usuario
-    // incluir el nuevo usuario en el arreglo
-    // retornar el objeto creado
-    /*id++;
-    const newTurn: IAppoimtment = {
-        id,
-        date: turnData.date,
-        time: turnData.time, 
-        userId: turnData.userId,
-        status: turnData.status
-    }
-    turns.push(newTurn);*/
-    const newTurn: IAppointment = {
-        id: turnData.appointmentId,
-        userId: turnData.appointmentId,
-        date: turnData.date,
-        time: turnData.time, 
-        status: turnData.status
-    }
-    return newTurn ;
+    return true;
 }
 
-
-
-export const getTurnServiceById = async (id: number): Promise<IAppointment[]> => {
-    const turn: IAppointment[] = turns.filter((turn: IAppointment) => {
-        if (turn.id === id) return turn;        
+export const getTurnServiceById = async (id: number) => {
+    const turn = await AppDataSource.manager.getRepository(Appointment);
+    const turnById = turn.findOne({
+        where: {
+            appointmentId: id
+        },
+        relations: {
+            user: true
+        }
     });
-    return turn;
+    return turnById;
 }
 
-export const deleteTurnServices = async (id: number): Promise<void> => {
-    turns = turns.filter((turn: IAppointment) => {
-        return turn.id !== id;
+export const cancelTurnServices = async (id: number): Promise<boolean> => {
+    const turnCancel = await AppDataSource.getRepository(Appointment);
+    const turn = await turnCancel.findOne({
+        where: { appointmentId: id },
     });
+    if (!turn) return false;
+    turn.status = AppointmentStatus.Cancelled;
+    await turnCancel.save(turn);
+    return true;    
 } 
