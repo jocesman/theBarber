@@ -1,7 +1,10 @@
 interface ICredentials {
-    id: number,
+    
     username: string,
     password: string
+    active:boolean,
+    createAt:string,
+    updateAt: string
 }
 
 export default ICredentials;

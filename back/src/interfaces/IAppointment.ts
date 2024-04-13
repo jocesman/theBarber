@@ -4,10 +4,9 @@ enum AppointmentStatus {
   }
   
 interface IAppointment {
-    id: number,
-    date: Date,
-    time: Date,
-    userId: number,
+    
+    date: string,
+    time: string,
     status: AppointmentStatus
 }
 

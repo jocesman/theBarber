@@ -1,4 +1,4 @@
-import { Request, Response } from "express"; 
+import { Request, Response } from "express";  
 import { createTurnsServices, getTurnServices, getTurnServiceById, cancelTurnServices } from "../services/appointmentService"
 import { Appointment } from "../entities/Appointment";
 

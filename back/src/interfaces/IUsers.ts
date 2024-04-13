@@ -6,13 +6,23 @@
 };*/
 
 interface IUser {
-    id: number,
+    
     name: string;
     email: string,
-    birthdate: Date;
+    birthdate: string,
     nDni: number,
-    credentialId: number
+    
 }
+
+
+//interface IUser {
+//    id: number,
+//    name: string;
+//    email: string,
+ //   birthdate: Date;
+ //   nDni: number,
+  //  credentialId: number
+//}
 
 export default IUser;
 
