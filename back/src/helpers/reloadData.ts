@@ -29,8 +29,6 @@ export const reloadData= async () => {
     });
 };
 
-
-
 const parseTimeString = (timeString:string): Date => {
     // Separar el string en horas y minutos
     let parts = timeString.split(':');

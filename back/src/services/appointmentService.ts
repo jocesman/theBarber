@@ -1,16 +1,10 @@
-import AppoimtmentDto from "../dto/AppointmentDto";
-import { AppointmentStatus, IAppointment } from "../interfaces/IAppointment";
+import { AppointmentStatus } from "../interfaces/IAppointment";
 import { Appointment } from "../entities/Appointment";
-import { AppDataSource } from "../config/data-source";
-import { User } from "../entities/Users";
-import { time } from "console";
-
-let turns: IAppointment[] = [];
-
-let id: number = 1234;
+import userRepository from "../repositories/userRepository";
+import appoRepository from "../repositories/appoReposiroty";
 
 export const getTurnServices = async (): Promise<Appointment[]> => {
-    const turns = await AppDataSource.getRepository(Appointment).find({
+    const turns = await appoRepository.find({
         relations:{
             user: true
         }
@@ -19,8 +13,8 @@ export const getTurnServices = async (): Promise<Appointment[]> => {
 }
 
 export const createTurnsServices = async ( turndata: any): Promise<boolean> => {
-    const user = await AppDataSource.manager.getRepository(User); 
-    const turn = await AppDataSource.manager.getRepository(Appointment);
+    const user = await userRepository;
+    const turn = await appoRepository;
     const userApp = await user.findOne({
         where: {
             userId: turndata.id
@@ -60,7 +54,7 @@ export const createTurnsServices = async ( turndata: any): Promise<boolean> => {
 }
 
 export const getTurnServiceById = async (id: number) => {
-    const turn = await AppDataSource.manager.getRepository(Appointment);
+    const turn = await appoRepository;
     const turnById = turn.findOne({
         where: {
             appointmentId: id
@@ -73,7 +67,7 @@ export const getTurnServiceById = async (id: number) => {
 }
 
 export const cancelTurnServices = async (id: number): Promise<boolean> => {
-    const turnCancel = await AppDataSource.getRepository(Appointment);
+    const turnCancel = await appoRepository;
     const turn = await turnCancel.findOne({
         where: { appointmentId: id },
     });
