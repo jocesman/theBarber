@@ -6,11 +6,29 @@ import  IUser  from "../interfaces/IUsers"
 import ICredentials from "../interfaces/ICredentials";
 import { IAppointment } from "../interfaces/IAppointment";
 import { AppointmentStatus } from "../entities/AppointmentStatus";
-import { user1, user2, user3, user4, user5 } from "./usersCreateReload";
-import { cred1, cred2, cred3, cred4, cred5 } from "./credsCreateReload";
-import { appo1, appo2, appo3, appo4, appo5 } from "./appoCreate";
-import { throws } from "assert";
-import { error } from "console";
+import { preloadUsers } from "./usersCreateReload"; 
+import { preloadCred } from "./credsCreateReload";
+import { appo } from "./appoCreate";
+
+
+export const reloadData= async () => {
+    await AppDataSource.manager.transaction( async (transactionalEntityManager) => {      
+        const users = await AppDataSource.manager.find(User);
+        if (users.length) return console.log('No se hizo la precarga porque ya hay datos');
+        let ind = 0;
+        for await (const user of preloadUsers) {
+            const newUser = await userRegister(user);
+            const newAppo = await appointmetCreate(appo[ind])
+            newUser.credential = await credentialCreate(preloadCred[ind]);
+            newAppo.user = newUser;
+            ind++;
+            await transactionalEntityManager.save(newUser);
+            await transactionalEntityManager.save(newAppo);
+        };
+        console.log('Recarga de datos realizada con éxito');
+    });
+};
+
 
 
 const parseTimeString = (timeString:string): Date => {
@@ -48,7 +66,7 @@ const userRegister = async (user:IUser): Promise<User> => {
     newUser.name = user.name;
     newUser.email = user.email;
     newUser.appointment = [];
-    newUser.nDni = user1.nDni;
+    newUser.nDni = user.nDni;
     newUser.birthdate= formatearFecha(user.birthdate);
     return newUser;
 }
@@ -69,47 +87,4 @@ const appointmetCreate = async ( appo: IAppointment): Promise<Appointment> => {
     newAppo.time = parseTimeString(appo.time);
     newAppo.status = AppointmentStatus.Active;
     return newAppo;
-}
-
-export const reloadData= async () => {
-    await AppDataSource.manager.transaction( async (transactionalEntityManager) => {      
-        
-        const newUser1 = await userRegister(user1);
-        const newUser2 = await userRegister(user2);
-        const newUser3 = await userRegister(user3);
-        const newUser4 = await userRegister(user4);
-        const newUser5 = await userRegister(user5);
-
-        newUser1.credential = await credentialCreate(cred1);
-        newUser2.credential = await credentialCreate(cred2);
-        newUser3.credential = await credentialCreate(cred3);
-        newUser4.credential = await credentialCreate(cred4);
-        newUser5.credential = await credentialCreate(cred5);
-
-        const newAppo1 = await appointmetCreate(appo1);
-        const newAppo2 = await appointmetCreate(appo2);
-        const newAppo3 = await appointmetCreate(appo3);
-        const newAppo4 = await appointmetCreate(appo4);
-        const newAppo5 = await appointmetCreate(appo5);
-
-        newAppo1.user = newUser1;
-        newAppo2.user = newUser2;
-        newAppo3.user = newUser3;
-        newAppo4.user = newUser4;
-        newAppo5.user = newUser5;
-
-        await transactionalEntityManager.save(newUser1);
-        await transactionalEntityManager.save(newUser2);
-        await transactionalEntityManager.save(newUser3);
-        await transactionalEntityManager.save(newUser4);
-        await transactionalEntityManager.save(newUser5);
-
-        await transactionalEntityManager.save(newAppo1);
-        await transactionalEntityManager.save(newAppo2);
-        await transactionalEntityManager.save(newAppo3);
-        await transactionalEntityManager.save(newAppo4);
-        await transactionalEntityManager.save(newAppo5);
-
-        console.log('Recarga de datos realizada con éxito');
-     });
 }
