@@ -12,8 +12,8 @@ export const getTurnById = async(req: Request, res: Response) => {
     const { id } = req.params;
     const idConsulta: number = parseInt(id);
     const turn = await getTurnServiceById(idConsulta);
-    if (turn == null)  res.status(400).json({"message":"Turno no encontrado"});
-    res.status(200).json(turn);
+    if (turn == null)  res.status(404).json("Turno no encontrado");
+    else res.status(200).json(turn);
 };
 
 export const schedule = async(req: Request, res: Response) => {
@@ -27,7 +27,7 @@ export const cancel = async(req: Request, res: Response) => {
     const { id } = req.params;
     const idConsulta: number = parseInt(id);
     const respuesta: boolean = await cancelTurnServices(idConsulta);
-    if (respuesta) res.status(200).json('Operación completada');
-    else res.status(400).json('Turno no existe');
+    if (respuesta) res.status(200).json('Operación completada - Turno Cancelado');
+    else res.status(404).json('Turno no existe');
 };
 

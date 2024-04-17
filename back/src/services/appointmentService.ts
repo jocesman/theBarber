@@ -1,7 +1,7 @@
 import { AppointmentStatus } from "../interfaces/IAppointment";
 import { Appointment } from "../entities/Appointment";
 import userRepository from "../repositories/userRepository";
-import appoRepository from "../repositories/appoReposiroty";
+import appoRepository from "../repositories/appoRepository";
 
 export const getTurnServices = async (): Promise<Appointment[]> => {
     const turns = await appoRepository.find({

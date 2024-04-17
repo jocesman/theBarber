@@ -1,93 +1,115 @@
 import { AppDataSource } from "../config/data-source";
-import appoRepository from "../repositories/appoReposiroty";
+import appoRepository from "../repositories/appoRepository";
 import userRepository from "../repositories/userRepository";
 import credRepository from "../repositories/credRepository";
 import { Credential } from "../entities/Credential";
 import { User } from "../entities/Users";
 import { CrearCredenciales } from "../middlewares/crearCredenciales";
-import { Appointment } from "../entities/Appointment";
+import { error } from "console";
 
 export const getUserServices = async () => {
-    const users = await userRepository.find({
-        relations: {
-            appointment: true
-        }
+    return await userRepository.find({
+        relations: ['appointment']
     });
-    return users;
 }
 
 export const getUserByIdService = async (id: number) => {
-    const users = await userRepository; //AppDataSource.manager.getRepository(User);
-    const userById = users.findOne({
-        where: {
-            userId: id
-        },
-        relations: {
-            appointment: true
-        }
+    return await userRepository.findOne({
+        where: { userId: id },
+        relations: ['appointment']
     });
-    return userById;
 }
 
 export const createUserServices = async (userData: User, credentialParams: Credential) => {
-    const newUser = new User();
-    newUser.name = userData.name;
-    newUser.email = userData.email;
-    newUser.birthdate = userData.birthdate;
-    newUser.nDni = userData.nDni;
-    const credentialId: Credential = await CrearCredenciales(credentialParams);
+    const queryRunner = AppDataSource.createQueryRunner();
+    try {
+        await queryRunner.connect();
+        await queryRunner.startTransaction()
+        
+        const newUser = new User();
+        Object.assign(newUser, userData);
+        /*newUser.name = userData.name;
+        newUser.email = userData.email;
+        newUser.birthdate = userData.birthdate;
+        newUser.nDni = userData.nDni;*/
+
+        const credentialId: Credential = await CrearCredenciales(credentialParams);
+        newUser.credential = credentialId;
+
+        await queryRunner.manager.save(newUser);
+        await queryRunner.commitTransaction();
+
+        return(newUser);
+    } catch (error) {        
+        await queryRunner.rollbackTransaction()
+        return (0);
+    } finally {     
+        await queryRunner.release()
+    }
     
-    newUser.credential = credentialId;
-    
-    await AppDataSource.manager.save(newUser);
-  
-    return(newUser);
 };    
 
 export const deleteUserServices = async (id: number): Promise<boolean> => {
-    const userToDelete = await userRepository;
-    const credToDelete = await credRepository;
-    const turnToDelete = await appoRepository;
-
-    // Obtener el usuario con sus relaciones cargadas
-    const user = await userToDelete.findOne({
-        where: { userId: id },
-        relations: ['appointment', 'credential'] 
-    });
-
-    // Verificar si se encontró el usuario
-    if (!user) return false;
-
-    await Promise.all(user.appointment.map(async (appointment) => {
-        await turnToDelete.delete(appointment);
-    }));
-
-    const idToDeleteCred = user?.credential.credentialId;
+    const queryRunner = AppDataSource.createQueryRunner();
     
+    try {
+        await queryRunner.connect();
+        await queryRunner.startTransaction()
 
-    const cred = await credToDelete.find({where: { credentialId: idToDeleteCred }});
-       
-    await userToDelete.remove(user);
-    await credToDelete.remove(cred);
+        const credToDelete = await credRepository;
+        // Obtener el usuario con sus relaciones cargadas
+        const user = await userRepository.findOne({
+            where: { userId: id },
+            relations: ['appointment', 'credential'] 
+        });
+        // Verificar si se encontró el usuario
+        if (!user) return false;        
+
+        await Promise.all(user.appointment.map(async (appointment) => {
+            await appoRepository.delete(appointment);
+        }));
+
+        //const idToDeleteCred = user?.credential.credentialId;
+        //const cred = await credToDelete.find({where: { credentialId: idToDeleteCred }});
+        
+        await userRepository.remove(user);
+        await credRepository.remove(user.credential);
+
+        await queryRunner.commitTransaction();
+        return true;
+        
+    } catch (error) {
+        await queryRunner.rollbackTransaction()
+        return false;
+    } finally {
+        // you need to release query runner which is manually created:       
+        await queryRunner.release()
+    }
     
-    return true;
 }
 
 export const bajaTemporalUserServices = async (id:number): Promise<boolean> => {
-    const userDown = await userRepository;
-    const credDown = await credRepository;
+    const queryRunner = AppDataSource.createQueryRunner();
+    try {
+        await queryRunner.connect();
+        await queryRunner.startTransaction();
+        const user = await userRepository.findOne({
+            where: { userId: id },
+            relations: ['credential'] 
+        });
 
-    const user = await userDown.findOne({
-        where: { userId: id },
-        relations: ['credential'] 
-    });
+        if (!user) return false;
 
-    if (!user) return false;
-
-    user.credential.active = false;
-    await credDown.save(user.credential);
-
-    return true;
+        user.credential.active = false;
+        await credRepository.save(user.credential);
+        await queryRunner.commitTransaction();
+        return true;
+    } catch (error) {
+        await queryRunner.rollbackTransaction();
+        return false;
+    } finally {
+        await queryRunner.release();
+    }
 }
     
    

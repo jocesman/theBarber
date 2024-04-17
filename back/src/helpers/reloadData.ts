@@ -12,21 +12,37 @@ import { appo } from "./appoCreate";
 
 
 export const reloadData= async () => {
-    await AppDataSource.manager.transaction( async (transactionalEntityManager) => {      
+    //await AppDataSource.manager.transaction( async (transactionalEntityManager) => {      
         const users = await AppDataSource.manager.find(User);
         if (users.length) return console.log('No se hizo la precarga porque ya hay datos');
         let ind = 0;
-        for await (const user of preloadUsers) {
-            const newUser = await userRegister(user);
-            const newAppo = await appointmetCreate(appo[ind])
-            newUser.credential = await credentialCreate(preloadCred[ind]);
-            newAppo.user = newUser;
-            ind++;
-            await transactionalEntityManager.save(newUser);
-            await transactionalEntityManager.save(newAppo);
-        };
-        console.log('Recarga de datos realizada con éxito');
-    });
+        const queryRunner = AppDataSource.createQueryRunner();
+        await queryRunner.connect();
+        await queryRunner.startTransaction()
+        try {
+            for await (const user of preloadUsers) {
+                const newUser = await userRegister(user);
+                const newAppo = await appointmetCreate(appo[ind])
+                newUser.credential = await credentialCreate(preloadCred[ind]);
+                newAppo.user = newUser;
+                ind++;
+                //await transactionalEntityManager.save(newUser);
+                await queryRunner.manager.save(newUser);
+                //await transactionalEntityManager.save(newAppo);
+                await queryRunner.manager.save(newAppo);
+                
+            };
+            await queryRunner.commitTransaction();                                                
+            console.log('Recarga de datos realizada con éxito');    
+        } catch (error) {
+            console.log ('<-- Error en la precarga -->')           
+            await queryRunner.rollbackTransaction()
+        } finally {
+            // you need to release query runner which is manually created:
+            await queryRunner.release()
+        }
+        
+    //});
 };
 
 const parseTimeString = (timeString:string): Date => {
