@@ -1,9 +1,15 @@
 interface UserDto {
-    name: string;
-    email: string,
-    birthdate: Date;
-    nDni: number,
-    credentialId: number
-};  
+    userPhone: string; 
+    userName: string;
+    userLastName: string;
+    userBirthDate: Date;
+    userId: string; 
+    userEmail: string; 
+    userAddress: string; 
+    userCity: string; 
+    userDateCreated: Date; 
+    userStatus: 'active' | 'inactive'; 
+    userTypeUser: 'admin' | 'user';
+}
 
 export default UserDto;

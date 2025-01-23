@@ -1,17 +1,16 @@
 import server from "./server";
 import { PORT } from "./config/envs";
-import "reflect-metadata";
+import "reflect-metadata"
 import { AppDataSource } from "./config/data-source";
-import { log } from "console";
-import { reloadData } from "./helpers/reloadData";
 
 AppDataSource.initialize()
-.then(res=> {
-    log('Conexión a la Base de Datos establecida');
-    reloadData()
-    .then(res =>
-        server.listen(PORT, () => {
-            log(`Server listening on port ${PORT}`)
-        })
-    )
+.then(res => {
+    console.log("Conexiòn a la Base de datos establecida");
+    server.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+    })
+})
+.catch(err => {
+    console.log("Error al inicializar la base de datos");
 });
+

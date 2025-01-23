@@ -1,22 +1,18 @@
 import { DataSource } from "typeorm";
-import { User } from "../entities/Users";
-import { Credential } from "../entities/Credential";
-import { Appointment } from "../entities/Appointment";
-import { DB_TIPO, DB_HOST, DB_USERNAMES, DB_PORT2, DB_PASSWORDS, DB_DATABASE } from "./envs"
-
-const db_tipo = DB_TIPO as "postgres";
+import { Users } from "../entities/Users";
+import { AccessControl } from "../entities/AccessControl";
+import { Appoinments } from "../entities/Appointments";
 
 export const AppDataSource = new DataSource({
-    type: db_tipo,
-    host: DB_HOST, 
-    port: DB_PORT2,
-    username: DB_USERNAMES, 
-    password: DB_PASSWORDS,
-    database: DB_DATABASE,
-    synchronize: true,
-    logging: false,
-    entities: [User, Credential, Appointment],
+    type: "postgres",
+    host: "localhost",
+    port: 5432,
+    username: "postgres",
+    password: "admin",
+    database: "appoinments",
+    synchronize: false, //si està en true inicializa las tablas de la base de datos
+    logging: false, //si està en true muestra la consulta en consola
+    entities: [Users, AccessControl, Appoinments],
     subscribers: [],
-    migrations: [],
-    //dropSchema: true
-});
+    migrations: []
+})

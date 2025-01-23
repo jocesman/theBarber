@@ -1,6 +1,0 @@
-"use strict";
-//require("dotenv").config();  <- esto es exactamente lo mismo que lo sgte ...
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.PORT = void 0;
-require("dotenv/config");
-exports.PORT = process.env.PORT;

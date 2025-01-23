@@ -1,47 +1,57 @@
-import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm"
-import { Credential } from "./Credential"
-import { Appointment } from "./Appointment"
-
+import { Column, Entity, PrimaryColumn } from "typeorm"
 
 @Entity({
     name: "users"
 })
-export class User {
-    @PrimaryGeneratedColumn()
-        userId: number
+export class Users {
+    @PrimaryColumn()
+    userPhone : string // Cambiado a string para manejar formatos de teléfono
 
     @Column({
-        length: 100
+        length: 50
     })
-    name: string
+    userName: string
+
+    @Column({
+        length: 50
+    })
+    userLastName: string
 
     @Column()
-    email: string
+    userBirthDate: Date
 
-    @Column()
-    birthdate: Date
+    @Column({
+        length: 18
+    })
+    userId: string // Mantiene string, válido para UUID o identificadores alfanuméricos
 
-    @Column()
-    nDni: number
+    @PrimaryColumn({
+        length: 30
+    })
+    userEmail: string // Mantiene string para correos electrónicos
 
-    //@Column()
-    //credentialId: number
+    @Column({
+        length: 150
+    })
+    userAddress: string// Puede incluir más especificaciones si se necesitan
 
-   // @OneToMany (() => Appointment, (appointment) => appointment.user, { cascade: true })
-    //    appointment: Appointment[]
+    @Column({
+        length: 50
+    })
+    userCity: string // Mantiene string
+
+    @Column({
+        default: new Date()
+    })
+    userDateCreated: Date // Mantiene Date para timestamps
+
+    @Column({
+        default: 'active'
+    })
+    userStatus: 'active' | 'inactive' // Cambiado a unión para manejar más estados
     
-   // @OneToOne(() => Credential, (credential) => credential.user, { cascade: true })
-   // @JoinColumn()
-   //     credential: Credential
-    //
-    @OneToOne(() => Credential, { cascade: true })
-    @JoinColumn()
-    credential: Credential;
-
-    @OneToMany(() => Appointment, (appointment) => appointment.user, { cascade: true })
-    appointment: Appointment[];
-
+    @Column({
+        enum: ['admin', 'user']
+    })
+    userTypeUser: 'admin' | 'user' // Cambiado a unión para manejar más tipos de usuarios
 }
-
-
-
