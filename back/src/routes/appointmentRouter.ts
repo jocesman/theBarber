@@ -1,10 +1,15 @@
 import { Router } from "express";
-import { createAppointment } from "../controllers/appointmentController";
+import { createAppointment, deleteAppointment, getAppointment, modifyAppointment, getAppointmentbyPhone } from "../controllers/appointmentController";
+import { get } from "http";
 
 
 const appointmentRouter: Router = Router();
 
+appointmentRouter.get("/", getAppointment);
+appointmentRouter.get("/:phone", getAppointmentbyPhone);
 appointmentRouter.post("/", createAppointment);
+appointmentRouter.delete("/:phone", deleteAppointment);
+appointmentRouter.put("/:phone", modifyAppointment);
 
 export default appointmentRouter;
 

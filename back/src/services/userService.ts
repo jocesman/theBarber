@@ -53,8 +53,9 @@ export const deleteUserService = async(phone: string) => {
 };
 
 export const modifyUserService = async(phone: string, userData: UserDto) => {
-    const user = await AppDataSource.getRepository(Users).findOneBy({ userPhone: phone });
-    AppDataSource.getRepository(Users).merge(userData);
-    const results = await AppDataSource.getRepository(Users).save(userData);
+    let user = await AppDataSource.getRepository(Users).findOneBy({ userPhone: phone });
+    if (!user) return null;
+    await AppDataSource.getRepository(Users).merge(userData);
+    user = await AppDataSource.getRepository(Users).save(userData);
     return user;
 };
