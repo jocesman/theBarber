@@ -1,9 +1,10 @@
 import { Router } from "express";
-import { createtUser, getUser, deleteUser, getUserByPhone } from "../controllers/userController";
 import userRouter from "./userRouter";
+import appointmentRouter from "./appointmentRouter";
 
 const router: Router = Router();
 
 router.use("/users", userRouter);
+router.use("/turns", appointmentRouter);
 
 export default router;

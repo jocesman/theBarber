@@ -1,19 +1,20 @@
-
-
 import { Column, Entity, PrimaryColumn } from "typeorm";
 
 @Entity({
     name: "appointments"
 })
-export class Appoinments {
+export class Appointments {
     @PrimaryColumn()
     appointmentUserPhone: string; // Cambiado a string para manejar formatos de teléfono
+
     @Column()
     appointmentDate: Date; // Mantiene la fecha completa
+
     @Column()
     appointmentTime: Date; // Cambiado a string en formato "HH:mm"
+    
     @Column({
-        enum: ['completed', 'cancelled']
+        enum: ['active', 'cancelled']
     })
-    appointmentStatus: 'completed' | 'cancelled'; // Representa múltiples estados
+    appointmentStatus: 'active' | 'cancelled'; // Representa múltiples estados
 }

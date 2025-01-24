@@ -3,7 +3,6 @@ import { getUserService, createtUserService, deleteUserService, getUserByPhoneSe
 import IUser from "../interfaces/IUser";
 import UserDto from "../dto/UserDto";
 import { createtAccessService } from "../services/accessService";
-import AccessDto from "../dto/AccessDto";
 import { encriptar } from "../middlewares/encriptacion";
 
 export const createtUser = async (req: Request, res: Response) => { 
