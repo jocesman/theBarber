@@ -1,3 +1,5 @@
+import { AccessControl } from "../entities/AccessControl";
+
 interface UserDto {
     userPhone: string; 
     userName: string;
@@ -10,6 +12,6 @@ interface UserDto {
     userDateCreated: Date; 
     userStatus: 'active' | 'inactive'; 
     userTypeUser: 'admin' | 'user';
-}
+};
 
 export default UserDto;

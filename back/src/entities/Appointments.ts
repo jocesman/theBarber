@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToOne, PrimaryColumn } from "typeorm";
+import { Users } from "./Users";
 
 @Entity({
     name: "appointments"
@@ -17,4 +18,9 @@ export class Appointments {
         enum: ['active', 'cancelled']
     })
     appointmentStatus: 'active' | 'cancelled'; // Representa múltiples estados
+
+    @ManyToOne(() => Users, (user) => user.userPhone)
+    @JoinTable()
+    user: Users
+    
 }

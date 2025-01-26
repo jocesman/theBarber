@@ -10,7 +10,8 @@ export const AppDataSource = new DataSource({
     username: "postgres",
     password: "admin",
     database: "appoinments",
-    synchronize: false, //si està en true inicializa las tablas de la base de datos
+    dropSchema: true, //si està en true inicializa las tablas de la base de datos
+    synchronize: true, 
     logging: false, //si està en true muestra la consulta en consola
     entities: [Users, AccessControl, Appointments],
     subscribers: [],

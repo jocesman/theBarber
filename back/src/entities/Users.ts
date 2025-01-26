@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryColumn } from "typeorm"
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryColumn } from "typeorm"
+import { AccessControl } from "./AccessControl"
+import { Appointments } from "./Appointments"
 
 @Entity({
     name: "users"
@@ -54,4 +56,13 @@ export class Users {
         enum: ['admin', 'user']
     })
     userTypeUser: 'admin' | 'user' // Cambiado a unión para manejar más tipos de usuarios
+
+    @OneToOne(() => AccessControl)
+    @JoinColumn()
+    accessControl: AccessControl
+     // Cambiado a string para manejar formatos de teléfono
+
+     @OneToMany(() => Appointments, (appointment) => appointment.user)
+     appointments: Appointments[]
 }
+

@@ -1,13 +1,19 @@
 import { Request, Response } from "express";
-import { getUserService, createtUserService, deleteUserService, getUserByPhoneService, modifyUserService } from "../services/userService";
-import IUser from "../interfaces/IUser";
+import {    getUserService, 
+            createtUserService,
+            deleteUserService, 
+            getUserByPhoneService, 
+            modifyUserService } 
+from "../services/userService";
+
 import UserDto from "../dto/UserDto";
 import { createtAccessService } from "../services/accessService";
 import { encriptar } from "../middlewares/encriptacion";
 import { Users } from "../entities/Users";
+import { AccessControl } from "../entities/AccessControl";
 
 export const createtUser = async (req: Request, res: Response) => { 
-    const { userPhone, userName, userLastName, userBirthDate, userId, userEmail, userAddress, userCity, userDateCreated, userStatus, userTypeUser }: UserDto = req.body;
+    const { userPhone, userName, userLastName, userBirthDate, userId, userEmail, userAddress, userCity, userDateCreated, userStatus, userTypeUser }: Users = req.body;
 
     const credentials = {
           accessUserPhone: userPhone, 
@@ -16,7 +22,11 @@ export const createtUser = async (req: Request, res: Response) => {
           accessLastVisit: new Date()
     };
 
-    const newUser = await createtUserService({ userPhone, userName, userLastName, userBirthDate, userId, userEmail, userAddress, userCity, userDateCreated, userStatus, userTypeUser });
+    const newUser = await createtUserService({
+        userPhone, userName, userLastName, userBirthDate, userId, userEmail, userAddress, userCity, userDateCreated, userStatus, userTypeUser,
+        accessControl: new AccessControl,
+        appointments: []
+    });
 
     await createtAccessService(credentials);
 
@@ -46,7 +56,7 @@ export const deleteUser = async(req: Request, res: Response) => {
 
 export const modifyUser = async(req: Request, res: Response) => { 
     const phone: string = req.params.phone;
-    const userData: UserDto = req.body;
+    const userData: Users = req.body;
     const user: Users | null = await modifyUserService(phone, userData);
     if (user) res.status(200).json({ message: "Usuario modificado", "Usuario": user })
      else res.status(404).json({ message: "Usuario no encontrado" });
