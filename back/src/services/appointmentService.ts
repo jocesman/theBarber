@@ -3,20 +3,22 @@ import { Appointments } from "../entities/Appointments";
 import { Users } from "../entities/Users";
 
 
-export const createtAppointmentService = async (appointmentData: Appointments): Promise<Appointments> => {
-    const appointment = await AppDataSource.getRepository(Appointments).create(appointmentData);
-    await AppDataSource.getRepository(Appointments).save(appointment);
-
-    const user = await AppDataSource.getRepository(Users).findOne({ 
-        where: { userPhone : appointmentData.appointmentUserPhone } });
+export const createtAppointmentService = async (phone: string, appointmentData: Appointments): Promise<Appointments | string> => {
     
-      if (user) {
-        console.log(user);
+    const user = await AppDataSource.getRepository(Users).findOne({ 
+        where: { userPhone : phone } });
+    console.log(user);
+    if (user) {
+        const appointment = await AppDataSource.getRepository(Appointments).create(appointmentData);
         appointment.user = user;
         await AppDataSource.getRepository(Appointments).save(appointment);
-    };
+        return appointment;
+      };
+    return "No se encontró ningún usuario con ese número de teléfono";
+ 
 
-    return appointment;
+    
+
 };
 
 export const getAppointmentService = async(): Promise<Appointments[]> => {

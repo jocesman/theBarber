@@ -27,7 +27,7 @@ export class Users {
     })
     userId: string // Mantiene string, válido para UUID o identificadores alfanuméricos
 
-    @PrimaryColumn({
+    @Column({
         length: 30
     })
     userEmail: string // Mantiene string para correos electrónicos

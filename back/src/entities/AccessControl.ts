@@ -7,11 +7,6 @@ export class AccessControl {
     @PrimaryColumn()
     accessUserPhone: string // Cambiado a string para manejar formatos de teléfono
 
-    @PrimaryColumn({
-        length: 30
-    })
-    accessUserEmail: string // Mantiene string para correos electrónicos
-
     @Column({
         length: 255
     })

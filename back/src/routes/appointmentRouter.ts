@@ -7,7 +7,7 @@ const appointmentRouter: Router = Router();
 
 appointmentRouter.get("/", getAppointment);
 appointmentRouter.get("/:phone", getAppointmentbyPhone);
-appointmentRouter.post("/", createAppointment);
+appointmentRouter.post("/:phone", createAppointment);
 appointmentRouter.delete("/:phone", deleteAppointment);
 appointmentRouter.put("/:phone", modifyAppointment);
 

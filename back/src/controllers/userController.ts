@@ -6,7 +6,6 @@ import {    getUserService,
             modifyUserService } 
 from "../services/userService";
 
-import UserDto from "../dto/UserDto";
 import { createtAccessService } from "../services/accessService";
 import { encriptar } from "../middlewares/encriptacion";
 import { Users } from "../entities/Users";

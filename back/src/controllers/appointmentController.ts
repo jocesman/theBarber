@@ -3,11 +3,13 @@ import { createtAppointmentService, deleteAppointmentService, getAppointmentbyPh
 import { Appointments } from "../entities/Appointments";
 import { AppDataSource } from "../config/data-source";
 import { get } from "http";
+import { toUSVString } from "util";
 
 
 export const createAppointment = async (req: Request, res: Response): Promise<void> => {
+    const phone = req.params.phone;
     const appointment = req.body;
-    const newAppointment = await createtAppointmentService(appointment);
+    const newAppointment = await createtAppointmentService(phone, appointment);
     res.status(201).json(newAppointment);
 };
 

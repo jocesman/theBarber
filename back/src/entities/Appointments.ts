@@ -1,11 +1,14 @@
-import { Column, Entity, JoinTable, ManyToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 import { Users } from "./Users";
 
 @Entity({
     name: "appointments"
 })
 export class Appointments {
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn("increment")
+    appointment: number
+
+    @Column()
     appointmentUserPhone: string; // Cambiado a string para manejar formatos de teléfono
 
     @Column()
@@ -20,7 +23,7 @@ export class Appointments {
     appointmentStatus: 'active' | 'cancelled'; // Representa múltiples estados
 
     @ManyToOne(() => Users, (user) => user.userPhone)
-    @JoinTable()
+    // @JoinTable()
     user: Users
     
 }
