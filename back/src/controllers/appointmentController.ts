@@ -1,10 +1,6 @@
 import { Request, Response } from "express";
 import { createtAppointmentService, deleteAppointmentService, getAppointmentbyPhoneService, getAppointmentService, modifyAppointmentService } from "../services/appointmentService";
 import { Appointments } from "../entities/Appointments";
-import { AppDataSource } from "../config/data-source";
-import { get } from "http";
-import { toUSVString } from "util";
-
 
 export const createAppointment = async (req: Request, res: Response): Promise<void> => {
     const phone = req.params.phone;
@@ -17,6 +13,7 @@ export const getAppointment = async (req: Request, res: Response) => {
     const appointment: Appointments[] = await getAppointmentService();
     res.status(200).json(appointment);
 };
+
 export const getAppointmentbyPhone = async (req: Request, res: Response) => {
     const appointment = await getAppointmentbyPhoneService(req.params.phone);
     if (appointment) res.status(200).json(appointment);

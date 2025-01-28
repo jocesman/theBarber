@@ -1,28 +1,24 @@
 import { AppDataSource } from "../config/data-source";
 import { Appointments } from "../entities/Appointments";
-import { Users } from "../entities/Users";
+import AppointmentRepository from "../repositories/AppointmentRepository";
+import UserRepository from "../repositories/UserRepositry";
 
 
 export const createtAppointmentService = async (phone: string, appointmentData: Appointments): Promise<Appointments | string> => {
     
-    const user = await AppDataSource.getRepository(Users).findOne({ 
+    const user = await UserRepository.findOne({ 
         where: { userPhone : phone } });
-    console.log(user);
     if (user) {
-        const appointment = await AppDataSource.getRepository(Appointments).create(appointmentData);
+        const appointment = await AppointmentRepository.create(appointmentData);
         appointment.user = user;
-        await AppDataSource.getRepository(Appointments).save(appointment);
+        await AppointmentRepository.save(appointment);
         return appointment;
       };
     return "No se encontró ningún usuario con ese número de teléfono";
- 
-
-    
-
 };
 
 export const getAppointmentService = async(): Promise<Appointments[]> => {
-    const appointment = await AppDataSource.getRepository(Appointments).find(
+    const appointment = await AppointmentRepository.find(
         {
             relations: ["user"]
         }
@@ -31,7 +27,7 @@ export const getAppointmentService = async(): Promise<Appointments[]> => {
 };
 
 export const getAppointmentbyPhoneService = async(phone: string): Promise<Appointments | null> => {
-    const appointment = await AppDataSource.getRepository(Appointments).findOne(
+    const appointment = await AppointmentRepository.findOne(
         { 
             where: { appointmentUserPhone: phone },
             relations: ["user"]
@@ -40,13 +36,13 @@ export const getAppointmentbyPhoneService = async(phone: string): Promise<Appoin
 };
 
 export const deleteAppointmentService = async(phone: string): Promise<any> => {
-    return await AppDataSource.getRepository(Appointments).delete({ appointmentUserPhone: phone });
+    return await AppointmentRepository.delete({ appointmentUserPhone: phone });
 };
 
 export const modifyAppointmentService = async(phone: string, appointmentData: Appointments): Promise<Appointments | null> => {
-    let appointment = await AppDataSource.getRepository(Appointments).findOneBy({ appointmentUserPhone: phone });
+    let appointment = await AppointmentRepository.findOneBy({ appointmentUserPhone: phone });
     if (!appointment) return null;
-    await AppDataSource.getRepository(Appointments).merge(appointmentData);
-    appointment = await AppDataSource.getRepository(Appointments).save(appointmentData);
+    await AppointmentRepository.merge(appointmentData);
+    appointment = await AppointmentRepository.save(appointmentData);
     return appointment;
 };

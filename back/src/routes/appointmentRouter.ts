@@ -8,7 +8,7 @@ const appointmentRouter: Router = Router();
 appointmentRouter.get("/", getAppointment);
 appointmentRouter.get("/:phone", getAppointmentbyPhone);
 appointmentRouter.post("/:phone", createAppointment);
-appointmentRouter.delete("/:phone", deleteAppointment);
+appointmentRouter.delete("/:phone", deleteAppointment); //borrar posteriormente, se va a usar un PUT
 appointmentRouter.put("/:phone", modifyAppointment);
 
 export default appointmentRouter;
