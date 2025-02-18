@@ -1,12 +1,25 @@
 import { useState } from "react";
 import "../css/AuthForm.css";
+import { validate } from "../helpers/Validate";
+
 
 const AuthForm = ({ onLogin }) => {
     const [isRegister, setIsRegister] = useState(false);
-    const [formData, setFormData] = useState({ email: "", password: "" });
+    const [formData, setFormData] = useState({ 
+        email: "", 
+        password: "" 
+    });
+
+    const [errors, setErrors] = useState({
+        email: "Email is required",
+        password: "Password is required"
+    });
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+
+        setErrors(validate(formData));
+
     };
 
     const handleSubmit = (e) => {
@@ -27,6 +40,7 @@ const AuthForm = ({ onLogin }) => {
                     onChange={handleChange}
                     required
                 />
+                {errors.email && <p style={{color:"red"}} className="error">{errors.email}</p>}
                 <input
                     type="password"
                     name="password"
@@ -35,6 +49,7 @@ const AuthForm = ({ onLogin }) => {
                     onChange={handleChange}
                     required
                 />
+                {errors.password && <p style={{color:"red"}} className="error">{errors.password}</p>}
                 <button type="submit">{isRegister ? "Registrarse" : "Ingresar"}</button>
             </form>
             <p onClick={() => setIsRegister(!isRegister)}>
