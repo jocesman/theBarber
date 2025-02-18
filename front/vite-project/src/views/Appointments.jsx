@@ -11,9 +11,9 @@ const Appointments = () => {
 
   useEffect(() => {
     axios.get('http://localhost:8080/turns')
-    .then(res => res.json())
+    // .then(res => res.json())
     .then(res => setTurno(res.data))
-    .catch(err => console.log(err));
+    // .catch(err => console.log(err));
   }, []);
 
   console.log('>>>>>>>>>>>>>>>>>>', turno);
@@ -23,8 +23,8 @@ const Appointments = () => {
       <h2>Listado de tus turnos</h2>
       <div>
       {
-        turno.map((turno, index) => (
-          <CajaAppointments key={turno.appointment||index} turno={turno} /> 
+        turno.map((turno) => (
+          <CajaAppointments key={turno.appointment} turno={turno} />
       ))
       
       }
