@@ -62,8 +62,6 @@ export const modifyUserService = async(phone: string, userData: Users): Promise<
     await queryRunner.startTransaction();
     try {
         let user = await queryRunner.manager.findOne(Users, { where: { userPhone: phone } });
-        console.log(user);
-        console.log(userData);
         if (!user) {
             throw new Error("No se encontró ningún usuario con ese número de teléfono");
         } else {
