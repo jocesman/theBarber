@@ -1,0 +1,70 @@
+/* Contenedor principal del navbar */
+.navbar {
+    /*position: fixed;  Fija el navbar en la parte superior */
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%; /* Ocupa todo el ancho */
+    height: 60px; /* Ajustado para una mejor apariencia */
+    background-color: #120ef0; /* Color de fondo */
+    display: flex;
+    align-items: center; /* Centra verticalmente */
+    padding: 0 20px; /* Espaciado a los lados */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para profundidad */
+    z-index: 1000; /* Se mantiene sobre otros elementos */
+}
+
+/* Contenedor del logo */
+.imagenBarber {
+    display: flex;
+    align-items: center; /* Centra la imagen dentro del div */
+}
+
+/* Estilos para la imagen del logo */
+.imagenBarber img {
+    height: 60px; /* Ajusta el tamaño de la imagen */
+    width: auto; /* Mantiene la proporción */
+    border-radius: 8px; /* Bordes redondeados (opcional) */
+}
+
+/* Contenedor interno para los elementos */
+.navbar-content {
+    flex: 1; /* Ocupa todo el espacio restante */
+    display: flex;
+    justify-content: center; /* Centra horizontalmente los elementos */
+    gap: 30px; /* Espaciado entre elementos */
+}
+
+/* Estilos para cada enlace */
+.navbar-content span {
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 10px 15px;
+    transition: color 0.3s ease;
+}
+
+.navbar-content span:hover {
+    color: #08f5fdf3; /*Cambia de color al pasar el mouse */
+    font-family: 'Roboto', sans-serif; 
+}
+
+/* Responsividad: Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+    }
+    
+    .navbar-content {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .imagenBarber img {
+        height: 30px;
+    }
+}

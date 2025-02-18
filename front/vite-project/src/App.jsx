@@ -1,13 +1,19 @@
 
 import Home from './views/Home'
 import Appointments from './views/Appointments'
+import NavBar from "./components/NavBar";
+import Servicios from './views/Servicios';
+import Contacto from './components/Contacto';
 
 function App() {
 
   return (
     <>
-      <Home />
-      {/* <Appointments /> */}
+      <NavBar />
+      {/* <Home /> */}
+      <Appointments />
+      {/* <Servicios /> */}
+      {/* <Contacto /> */}
     </>
   )
 }
