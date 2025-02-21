@@ -31,8 +31,7 @@ const App = () => {
         <div style={{display:"flex", justifyContent:"center"}}>
         <img style={{width:"10%"}} src="https://img.freepik.com/vector-premium/icono-poste-peluquero-vector-simbolo-barberia_883533-2.jpg" alt="Barber Logo" />
         </div>
-        <br />
-        <br />
+        <br /><br />
         <h2>Cargando sus datos, por favor espere un momento ...</h2>
         <br />
         </>

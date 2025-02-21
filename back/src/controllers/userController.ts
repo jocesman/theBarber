@@ -14,10 +14,12 @@ import { AccessControl } from "../entities/AccessControl";
 export const createtUser = async (req: Request, res: Response) => { 
     const { userPhone, userName, userLastName, userBirthDate, userId, userEmail, userAddress, userCity, userDateCreated, userStatus, userTypeUser }: Users = req.body;
 
+    const contraseña = encriptar(req.body.userPassword);
+
     const credentials = {
           accessUserPhone: userPhone, 
           accessUserEmail: userEmail, 
-          accessUserPassword: encriptar(req.body.userPassword),
+          accessUserPassword: contraseña,
           accessLastVisit: new Date()
     };
 

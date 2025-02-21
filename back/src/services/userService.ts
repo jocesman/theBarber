@@ -3,31 +3,7 @@ import { Users } from "../entities/Users";
 import UserRepository from "../repositories/UserRepositry";
 
 export const createtUserService = async (userData: Users): Promise<Users> => { 
-    // recibir los datos del usuario
-    // crear el usuario
-    // incluir el usuario en el arreglo temporal || en la base de datos
-    // retornar el usuario
-
-    // const newUser: IUser = {
-    //     userPhone: userData.userPhone,
-    //     userName: userData.userName,
-    //     userLastName: userData.userLastName,
-    //     userId: userData.userId,
-    //     userEmail: userData.userEmail,
-    //     userAddress: userData.userAddress,
-    //     userCity: userData.userCity,
-    //     userDateCreated: userData.userDateCreated,
-    //     userStatus: "active",
-    //     userTypeUser: userData.userTypeUser
-    // };
-
-    // userss.push(newUser);
-
-    // return newUser;
-
-    // const user:Users = await AppDataSource.getRepository(Users).create(userData);
     const user:Users = await UserRepository.create(userData);
-    // await AppDataSource.getRepository(Users).save(user);
     await UserRepository.save(user);
     return user;
 };
