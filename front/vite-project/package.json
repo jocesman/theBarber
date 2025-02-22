@@ -14,7 +14,9 @@
     "formik": "^2.4.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "styled-components": "^6.1.14"
+    "styled-components": "^6.1.14",
+    "sweetalert2": "^11.17.2",
+    "yup": "^1.6.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

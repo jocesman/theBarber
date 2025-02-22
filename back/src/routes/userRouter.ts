@@ -6,7 +6,7 @@ import auth from "../middlewares/auth";
 const userRouter: Router = Router();
 
 userRouter.post ("/", createtUser);
-userRouter.get("/", auth,  getUser);
+userRouter.get("/", getUser);
 userRouter.get("/:phone", getUserByPhone);
 userRouter.delete ("/:phone", deleteUser);
 userRouter.put ("/:phone", modifyUser);

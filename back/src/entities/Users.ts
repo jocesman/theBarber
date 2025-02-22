@@ -28,7 +28,7 @@ export class Users {
     userId: string // Mantiene string, válido para UUID o identificadores alfanuméricos
 
     @Column({
-        length: 30
+        length: 100
     })
     userEmail: string // Mantiene string para correos electrónicos
 
@@ -65,4 +65,5 @@ export class Users {
      @OneToMany(() => Appointments, (appointment) => appointment.user)
      appointments: Appointments[]
 }
+
 

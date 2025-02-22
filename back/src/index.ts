@@ -8,19 +8,37 @@ import { log } from "console";
 AppDataSource.initialize()
     .then(res => {
         console.log("Conexión a la Base de datos establecida");
-        preLoadData()
-        .then(res => {
+        // preLoadData()
+        // .then(res => {
             server.listen(PORT, () => {
                 console.log(`Server is running on port ${PORT}`);
-            })
+            // })
         })
-        .catch(err => {
-                console.log("Error al precargar los datos de prueba");
-                console.log(err);
-            });
+        // .catch(err => {
+                // console.log("Error al precargar los datos de prueba");
+                // console.log(err);
+            // });
     })
     .catch(err => {
         console.log("Error al inicializar la base de datos");
         console.log(err)
     });
 
+    // AppDataSource.initialize()
+    // .then(res => {
+    //     console.log("Conexión a la Base de datos establecida");
+    //     preLoadData()
+    //     .then(res => {
+    //         server.listen(PORT, () => {
+    //             console.log(`Server is running on port ${PORT}`);
+    //         })
+    //     })
+    //     .catch(err => {
+    //             console.log("Error al precargar los datos de prueba");
+    //             console.log(err);
+    //         });
+    // })
+    // .catch(err => {
+    //     console.log("Error al inicializar la base de datos");
+    //     console.log(err)
+    // });
