@@ -1,8 +1,11 @@
+body {
+    background-color:rgb(170, 7, 7);
+}
 .form-container {
     max-width: 600px;
     margin: 2rem auto;
     padding: 2rem;
-    background-color: #4ac1df65;
+    background-color: #02013a;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
@@ -30,13 +33,13 @@
   }
   
   .form-header h2 {
-    color: #2c3e50;
+    color: #eef1f5;
     font-size: 1.8rem;
     margin: 0;
   }
 
   h6 {
-    color: #2c3e50;
+    color: #f3f6f8;
     font-size: 1.4rem;
     margin: 0;
   }
@@ -54,7 +57,7 @@
   }
   
   .form-group label {
-    color: #010713;
+    color: #e8eaee;
     font-size: 0.9rem;
     font-weight: 500;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -113,7 +116,7 @@
   .btn-primary:hover {
     background-color: #06437c;
     translate: 5px -5px;
-
+    font-style: italic;
   }
   
   .btn-secondary {
@@ -126,6 +129,7 @@
     background-color: #818488;
     color: white;
     translate: 5px -5px;
+    font-style: italic;
   }
   
   .btn-cancel {
@@ -136,8 +140,9 @@
   
   .btn-cancel:hover {
     background-color: #db13135e;
-    color: rgb(6, 6, 14);
+    color: rgb(238, 238, 240);
     translate: 5px -5px;
+    font-style: italic;
   }
   
   /* Responsive design */
@@ -156,8 +161,8 @@
     }
   }
 
-  .errorMessage {
-    color: #dd2424;
+  p .errorMessage {
+    color: #960f0f;
     font-size: 12px;
     margin-top: 0rem;
   }

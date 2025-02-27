@@ -1,17 +1,18 @@
 import '../css/NavBar.css';
+import TheBarber from '../Images/TheBarber.png';
+import { Link } from 'react-router-dom';
 
-const NavBar = () => {
+function NavBar() {
   return (
     <div className="navbar">
       <div className="imagenBarber">
-            {/* Imagen de logo */}
-             <img src="https://thumbs.dreamstime.com/z/dise%C3%B1o-del-vector-de-la-insignia-logotipo-bandera-peluquero-barber%C3%ADa-los-hombres-plantilla-139643489.jpg"/>
+        <img src={TheBarber} alt="Logo The Barber"/>
       </div>
       <div className="navbar-content">
-        <span>QUIENES SOMOS</span>
-        <span>MIS TURNOS</span>
-        <span> SERVICIOS</span>
-        <span>CONTACTO</span>
+        <Link className="link" to="/QuienesSomos">QUIENES SOMOS</Link>
+        <Link className="link" to="/turnos">MIS TURNOS</Link>
+        <Link className="link" to="/servicios">SERVICIOS</Link>
+        <Link className="link" to="/contacto">CONTACTO</Link>
       </div>
     </div>
   );

@@ -5,8 +5,8 @@
     top: 0;
     left: 0;
     width: 100%; /* Ocupa todo el ancho */
-    height: 60px; /* Ajustado para una mejor apariencia */
-    background-color: #120ef0; /* Color de fondo */
+    height: 80px; /* Ajustado para una mejor apariencia */
+    background-color: #05036b; /* Color de fondo */
     display: flex;
     align-items: center; /* Centra verticalmente */
     padding: 0 20px; /* Espaciado a los lados */
@@ -15,16 +15,13 @@
 }
 
 /* Contenedor del logo */
-.imagenBarber {
-    display: flex;
-    align-items: center; /* Centra la imagen dentro del div */
-}
+
 
 /* Estilos para la imagen del logo */
-.imagenBarber img {
-    height: 60px; /* Ajusta el tamaño de la imagen */
-    width: auto; /* Mantiene la proporción */
-    border-radius: 8px; /* Bordes redondeados (opcional) */
+.imagenBarber img { 
+    width: 12%; /*Ajusta el tamaño de la imagen */
+    height: auto; /* Mantiene la proporción */
+    border-radius: 15%; /*Bordes redondeados (opcional)*/
 }
 
 /* Contenedor interno para los elementos */
@@ -36,16 +33,17 @@
 }
 
 /* Estilos para cada enlace */
-.navbar-content span {
+.link{
     color: white;
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
     padding: 10px 15px;
     transition: color 0.3s ease;
+    text-decoration: none;
 }
 
-.navbar-content span:hover {
+.link:hover {
     color: #08f5fdf3; /*Cambia de color al pasar el mouse */
     font-family: 'Roboto', sans-serif; 
 }

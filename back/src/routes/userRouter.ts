@@ -1,7 +1,6 @@
 
 import { Router } from "express";
 import { createtUser, getUser, deleteUser, getUserByPhone, modifyUser } from "../controllers/userController";
-import auth from "../middlewares/auth";
 
 const userRouter: Router = Router();
 

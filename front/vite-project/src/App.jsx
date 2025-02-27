@@ -1,64 +1,30 @@
+import { Routes, Route, useLocation } from 'react-router-dom';
+import NavBar from './components/NavBar';
+import AuthForm from './components/Authform/AuthForm';
+import RegForm from './components/RegForm/RegForm';
+import ErrorPage from './components/ErrorPage';
+import RecuperarPass from './components/RecuperarPass/RecuperarPass';
 
-import Home from './views/Home'
-import Appointments from './views/Appointments'
-import NavBar from "./components/NavBar";
-import Servicios from './views/Servicios';
-import Contacto from './components/Contacto';
-import AuthForm from './components/AuthForm';
-import { useState, useEffect } from 'react';
+function App() {
 
-const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [showWelcome, setShowWelcome] = useState(false);
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      setShowWelcome(true);
-      setTimeout(() => {
-        setShowWelcome(false);
-      }, 2000);
-    }
-  }, [isAuthenticated]);
+  const location = useLocation();
 
   return (
-    <div>
-      {!isAuthenticated ? (
-        <AuthForm onLogin={() => setIsAuthenticated(true)} />
-      ) : showWelcome ? (
-        <>
-        <h1>The Barber</h1>
-        <h3>Bienvenido al control de citas</h3>
-        <div style={{display:"flex", justifyContent:"center"}}>
-        <img style={{width:"10%"}} src="https://img.freepik.com/vector-premium/icono-poste-peluquero-vector-simbolo-barberia_883533-2.jpg" alt="Barber Logo" />
-        </div>
-        <br /><br />
-        <h2>Cargando sus datos, por favor espere un momento ...</h2>
-        <br />
-        </>
-      ) : (
-        <>
-        <NavBar />
-        <Appointments/>
-        </>
-      )}
-    </div>
-  );
-};
+    <div className='App'>
+      {(location.pathname === '/' || 
+        location.pathname === '/CrearCuenta'||
+        location.pathname === '/RecuperarContrasena') 
+        ? null : <NavBar />
+       }
+
+      <Routes>
+        <Route path="/" element={<AuthForm />} />
+        <Route path='/CrearCuenta' element={<RegForm />} />
+        <Route path='/RecuperarContrasena' element={<RecuperarPass />} />
+        <Route path='*' element={<ErrorPage />} />
+      </Routes>
+    </ div>
+  )
+}
 
 export default App;
-  
-
-
-//   return (
-//     <>
-//       <AuthForm />
-//       <NavBar />
-//       {/* <Home /> */}
-//       {/* <Appointments /> */}
-//       {/* <Servicios /> */}
-//       {/* <Contacto /> */}
-//     </>
-//   )
-// }
-
-// export default App

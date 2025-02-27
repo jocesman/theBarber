@@ -2,72 +2,13 @@ import '../../css/RegForm.css';
 import RodilloBarberia from '../../Images/RodilloBarberia.png';
 import { useFormik } from 'formik';
 import Schema from './Schema';
-import axios from 'axios';
-import Swal from 'sweetalert2';
-
-const verificarUser = async (phone, email) =>{
-  try {
-    const usuarios = await axios.get(`http://localhost:8080/users`);
-    const existePhone = usuarios.data.find(usuario => usuario.userPhone === phone);
-    const existeEmail = usuarios.data.find(usuario => usuario.userEmail === email);
-    if (existePhone || existeEmail)  return true;
-    else  return false;
-  } catch (error) {
-        Swal.fire({
-          title: "¡Alerta!",
-          text: "Error al verificar el usuario",
-          icon: "error",
-          confirmButtonText: "Intentar de nuevo"
-        })
-        return false;
-  }
-}
-
-const createUser = async (values) =>{
-    const createUserBody = {
-    userPhone: values.phone, 
-    userName: values.name,
-    userLastName: values.lastname,
-    userId: values.id,
-    userBirthDate: values.birthDate,
-    userEmail:  values.email,
-    userAddress: values.address,
-    userCity: values.city,
-    userDateCreated: new Date(),
-    userStatus: "Active",
-    userTypeUser: "user",
-    userPassword: values.password
-  }
-
-  if (await verificarUser(values.phone, values.email)) {
-      Swal.fire({
-        title: "¡Alerta!",
-        text: `El número de teléfono ${values.phone} o el correo electrónico (email) ${values.email} que está intentando registrar para el usuario ${values.name} ${values.lastname} -> Ya Existe!`,
-        icon: "error",
-        confirmButtonText: "Intentar de nuevo"
-      })
-  } else {
-      await axios.post('http://localhost:8080/users', createUserBody)
-        .then(
-          Swal.fire({
-            icon: 'success',
-            title: 'Usuario Creado',
-            text: `El usuario ${values.name} ${values.lastname} con número de teléfono ${values.phone} y correo electrónico (email) ${values.email} ha sido creado exitosamente`,
-            confirmButtonText: 'Aceptar',
-          }))
-        .catch(err => 
-          Swal.fire({
-            title: "¡Alerta!",
-            text: `El usuario no pudo ser creado ${err.message}`,
-            icon: "error",
-            confirmButtonText: "Intentar de nuevo",
-          })
-        );
-}}
+import createUser from './CreateUser';
+import { useNavigate } from 'react-router-dom';
 
 const RegForm = () => {
+  const navigate = useNavigate();
 
-  const {handleSubmit, handleChange, errors, handleReset, values, handleCancel} = useFormik({   
+  const {handleSubmit, handleChange, errors, handleReset, values} = useFormik({   
     initialValues: {
         name:'',
         lastname:'',
@@ -81,14 +22,15 @@ const RegForm = () => {
         confirmPassword: ''
     },
     onSubmit: createUser,
-    validationSchema: Schema
+    validationSchema: Schema,
+    // handleReset: navigate('/')
 });
 
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit} onReset={handleReset} className="reg-form">
         <div className="form-header">
-            <img src={RodilloBarberia} alt="Imagen The Barber"/>
+           <img src={RodilloBarberia} alt="Imagen The Barber"/>
           <h2>Registro Nuevo Usuario</h2>
         </div>
         <div className="form-body">
@@ -226,12 +168,12 @@ const RegForm = () => {
 
         <div className="form-footer">
           <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
-            Hacer Registro
+            Registrar Datos
           </button>
           <button type="reset" className="btn btn-secondary" onClick={handleReset}>
             Limpiar Formulario
           </button>
-          <button type="s" className="btn btn-cancel" onClick={handleCancel}>
+          <button type="button" className="btn btn-cancel" onClick={() => navigate('/')}>
             Cancelar Registro
           </button>
         </div>
