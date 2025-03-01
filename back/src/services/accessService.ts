@@ -58,8 +58,8 @@ export const recuperarAccessService = async (email: string): Promise<void> => {
     const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-            user: "theb20139@gmail.com",  // 📌 Reemplaza con tu email
-            pass: "audy ywby yzvs hdbu"  // 📌 Usa un "App Password" generado en Gmail
+            user: "theb20139@gmail.com",  
+            pass: "audy ywby yzvs hdbu"  
         },
         tls: {
             rejectUnauthorized: false
@@ -91,8 +91,8 @@ export const contactoUserAccessService = async (email: string): Promise<void> =>
     const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-            user: "theb20139@gmail.com",  // 📌 Reemplaza con tu email
-            pass: "audy ywby yzvs hdbu"  // 📌 Usa un "App Password" generado en Gmail
+            user: "theb20139@gmail.com",  
+            pass: "audy ywby yzvs hdbu"  
         },
         tls: {
             rejectUnauthorized: false
