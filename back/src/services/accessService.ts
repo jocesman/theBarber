@@ -31,7 +31,6 @@ export const getAccessService = async (credentials: AccessControl) => {
 
 
 export const recuperarAccessService = async (email: string): Promise<void> => {
-    console.log('Estoy en el servicio, email:', email);
 
     // 1. Buscar al usuario por email
     const userRec = await AppDataSource.getRepository(Users).findOne({ where: { userEmail: email } });
@@ -73,9 +72,44 @@ export const recuperarAccessService = async (email: string): Promise<void> => {
         to: email,
         subject: "Recuperación de Contraseña",
         html: `<p>Hola, <strong>${userName}</strong>,</p>
-               <p>Tu contraseña para poder accesar a la aplicaci{on es la siguiente <strong>${decryptedPassword}</strong>. 
-               <p>Si no solicitaste esto, por favor envíanos un correo para cambia tu contraseña inmediatamente.</p>
-               <p>Te recomendamos borrar inmediatamente este correo luego de que memorices la contraseña</p>`
+        <p>Tu contraseña para acceder a la aplicación es la siguiente: <strong>${decryptedPassword}</strong>.</p>
+        <p>Si no solicitaste este correo, por favor envíanos un mensaje para cambiar tu contraseña de inmediato.</p>
+        <p>Te recomendamos memorizar tu contraseña y eliminar este correo electrónico para mantenerla segura.</p>`
+    };
+
+    // 7. Enviar el email
+    try {
+        await transporter.sendMail(mailOptions);
+        console.log('Email enviado con éxito a:', email);
+    } catch (error) {
+        console.error('Error al enviar el email:', error);
+    }
+};
+
+export const contactoUserAccessService = async (email: string): Promise<void> => {
+
+    const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+            user: "theb20139@gmail.com",  // 📌 Reemplaza con tu email
+            pass: "audy ywby yzvs hdbu"  // 📌 Usa un "App Password" generado en Gmail
+        },
+        tls: {
+            rejectUnauthorized: false
+        }
+    });
+
+    // 6. Configurar el contenido del email
+    const mailOptions = {
+        from: '"Soporte Técnico" <The Barber>',
+        to: email,
+        subject: "Usted nos ha escrito desde la página de contacto",
+        html: `<p>Hola estimado cliente,</p>
+        <p>Le informamos de que su solicitud ha sido recibida y en los próximos días nos pondremos en contacto contigo para darle una respuesta.</p>
+        <p>Gracias por su tiempo y atención.</p>
+        <p>Atentamente,</p>
+        <p>El equipo de The Barber</p>
+        <p>Saludos cordiales,</p>`
     };
 
     // 7. Enviar el email

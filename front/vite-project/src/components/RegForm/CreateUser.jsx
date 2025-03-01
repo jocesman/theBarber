@@ -1,0 +1,50 @@
+import Swal from 'sweetalert2';
+import verificarUser from './VerificarUsuario';
+import axios from 'axios';
+
+const createUser = async (values, navigate) => {
+  const createUserBody = {
+    userPhone: values.phone, 
+    userName: values.name,
+    userLastName: values.lastname,
+    userId: values.id,
+    userBirthDate: values.birthDate,
+    userEmail:  values.email,
+    userAddress: values.address,
+    userCity: values.city,
+    userDateCreated: new Date(),
+    userStatus: "Active",
+    userTypeUser: "user",
+    userPassword: values.password
+  };
+
+  if (await verificarUser(values.phone, values.email)) {
+    Swal.fire({
+      title: "¡Alerta!",
+      text: `El número de teléfono ${values.phone} o el correo electrónico ${values.email} ya existe.`,
+      icon: "error",
+      confirmButtonText: "Intentar de nuevo"
+    });
+  } else {
+    try {
+      await axios.post('http://localhost:8080/users', createUserBody);
+      Swal.fire({
+        icon: 'success',
+        title: 'Usuario Creado',
+        text: `El usuario ${values.name} ${values.lastname} ha sido creado exitosamente`,
+        confirmButtonText: 'Aceptar',
+      }).then(() => {
+        navigate("/"); // Si el usuario es creado, redirigir al login
+      });
+    } catch (err) {
+      Swal.fire({
+        title: "¡Alerta!",
+        text: `El usuario no pudo ser creado: ${err.message}`,
+        icon: "error",
+        confirmButtonText: "Intentar de nuevo",
+      });
+    }
+  }
+};
+
+export default createUser;

@@ -4,24 +4,32 @@ import AuthForm from './components/Authform/AuthForm';
 import RegForm from './components/RegForm/RegForm';
 import ErrorPage from './components/ErrorPage';
 import RecuperarPass from './components/RecuperarPass/RecuperarPass';
+import Home from './views/Home';
+import Appointments from './views/Appointments';
+import Services from './views/Servicios';
+import Contacto from './components/Contacto';
 
 function App() {
 
   const location = useLocation();
 
+  // Rutas donde NO se debe mostrar la NavBar
+  const hideNavBarRoutes = ['/', '/CrearCuenta', '/RecuperarContrasena'];
+  const shouldShowNavBar = !hideNavBarRoutes.includes(location.pathname);
+
   return (
     <div className='App'>
-      {(location.pathname === '/' || 
-        location.pathname === '/CrearCuenta'||
-        location.pathname === '/RecuperarContrasena') 
-        ? null : <NavBar />
-       }
+      {shouldShowNavBar && <NavBar />}
 
       <Routes>
         <Route path="/" element={<AuthForm />} />
         <Route path='/CrearCuenta' element={<RegForm />} />
         <Route path='/RecuperarContrasena' element={<RecuperarPass />} />
-        <Route path='*' element={<ErrorPage />} />
+        <Route path='/QuienesSomos' element={<Home />} />
+        <Route path='/turnos' element={<Appointments />} />
+        <Route path='/servicios' element={<Services />} />
+        <Route path='/contacto' element={<Contacto />} />
+        <Route path='*' element={<ErrorPage />} />  
       </Routes>
     </ div>
   )

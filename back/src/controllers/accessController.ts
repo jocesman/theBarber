@@ -1,4 +1,4 @@
-import { getAccessService, recuperarAccessService } from "../services/accessService";
+import { contactoUserAccessService, getAccessService, recuperarAccessService } from "../services/accessService";
 import { Request, Response } from "express";
 
 export const getAccess = async (req: Request, res: Response) => {
@@ -7,8 +7,13 @@ export const getAccess = async (req: Request, res: Response) => {
 };
 
 export const recuperarAccess = async (req: Request, res: Response) => {
-    console.log('Estoy en el controlador', req.params.email);
     const email:string = req.params.email;
     await recuperarAccessService(email);
+    res.status(200).json(email);
+};
+
+export const contactoUserAccess = async (req: Request, res: Response) => {
+    const email:string = req.params.email;
+    await contactoUserAccessService(email);
     res.status(200).json(email);
 };

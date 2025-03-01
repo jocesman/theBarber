@@ -2,11 +2,16 @@ import '../../css/RegForm.css';
 import RodilloBarberia from '../../Images/RodilloBarberia.png';
 import { useFormik } from 'formik';
 import Schema from './Schema';
-import createUser from './CreateUser';
 import { useNavigate } from 'react-router-dom';
+import createUser from './CreateUser.jsx';
 
 const RegForm = () => {
   const navigate = useNavigate();
+
+  const handleSubmitForm = async (values) => {
+    await createUser(values, navigate);
+  };
+  
 
   const {handleSubmit, handleChange, errors, handleReset, values} = useFormik({   
     initialValues: {
@@ -21,9 +26,8 @@ const RegForm = () => {
         password: '',
         confirmPassword: ''
     },
-    onSubmit: createUser,
-    validationSchema: Schema,
-    // handleReset: navigate('/')
+    onSubmit: handleSubmitForm,
+    validationSchema: Schema
 });
 
   return (

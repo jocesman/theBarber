@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import '../css/Contacto.css';
+import Swal from 'sweetalert2';
+import axios from 'axios';
 
 const Contacto = () => {
     const [formData, setFormData] = useState({
@@ -15,10 +17,26 @@ const Contacto = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        alert('Mensaje enviado con éxito');
-        setFormData({ nombre: '', email: '', mensaje: '' });
+        try {
+            alert('Mensaje enviado a', formData.email);
+            await axios.patch(`http://localhost:8080/contacto/${formData.email}`);
+            Swal.fire({
+                title: "¡Datos Enviados!",
+                text: `Sus datos los recibimos exitosamente, y le hemos enviado una confirmación al correo electrónico: ${formData.email}`,
+                icon: "success",
+                confirmButtonText: "Aceptar"
+            });
+            setFormData({ nombre: '', email: '', mensaje: '' });
+        } catch (err) {
+            Swal.fire({
+                title: "¡Alerta!",
+                text: `Su datos no pudieron ser enviados: ${err.message}`,
+                icon: "error",
+                confirmButtonText: "Intentar de nuevo"
+            });
+        }
     };
 
     return (
@@ -26,8 +44,9 @@ const Contacto = () => {
             <h2>Contacto</h2>
             <form onSubmit={handleSubmit} className="contacto-form">
                 <div className="form-group">
-                    <label>Nombre:</label>
+                    <label >Nombre:</label>
                     <input
+                        className='nombre'
                         type="text"
                         name="nombre"
                         value={formData.nombre}
