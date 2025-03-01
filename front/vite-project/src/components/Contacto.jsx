@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import '../css/Contacto.css';
+import '../css/Contactos.css';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 
@@ -20,11 +20,10 @@ const Contacto = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            alert('Mensaje enviado a', formData.email);
             await axios.patch(`http://localhost:8080/contacto/${formData.email}`);
             Swal.fire({
                 title: "¡Datos Enviados!",
-                text: `Sus datos los recibimos exitosamente, y le hemos enviado una confirmación al correo electrónico: ${formData.email}`,
+                html: `Sus datos los recibimos exitosamente, y le hemos enviado una confirmación al correo electrónico: <strong>${formData.email}</strong>.<br><br>Si no aparece esta confirmación en su bandeja de entrada, revise su carpeta de spam.`,
                 icon: "success",
                 confirmButtonText: "Aceptar"
             });
@@ -32,7 +31,7 @@ const Contacto = () => {
         } catch (err) {
             Swal.fire({
                 title: "¡Alerta!",
-                text: `Su datos no pudieron ser enviados: ${err.message}`,
+                html: `Su datos no pudieron ser enviados:<br><br>${err.message}`,
                 icon: "error",
                 confirmButtonText: "Intentar de nuevo"
             });
@@ -41,7 +40,8 @@ const Contacto = () => {
 
     return (
         <div className="contacto-container">
-            <h2>Contacto</h2>
+            <div className="contacto-container2">
+            <h2>Buzón de Contacto</h2>
             <form onSubmit={handleSubmit} className="contacto-form">
                 <div className="form-group">
                     <label >Nombre:</label>
@@ -73,8 +73,9 @@ const Contacto = () => {
                         required
                     ></textarea>
                 </div>
-                <button type="submit" className="contacto-btn">Enviar</button>
+                <button type="submit" className="btn contacto-btn">Enviar</button>
             </form>
+            </div>
         </div>
     );
 };

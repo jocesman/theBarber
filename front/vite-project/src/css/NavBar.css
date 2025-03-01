@@ -1,68 +1,60 @@
-/* Contenedor principal del navbar */
+/* Estilos para el Navbar */
 .navbar {
-    /*position: fixed;  Fija el navbar en la parte superior */
+    background-color: #0f037c; /* Azul oscuro */
+    background-image: linear-gradient(to right, #0f037c, #0f037c);
     position: sticky;
     top: 0;
     left: 0;
-    width: 100%; /* Ocupa todo el ancho */
-    height: 80px; /* Ajustado para una mejor apariencia */
-    background-color: #05036b; /* Color de fondo */
+    width: 100%;
+    height: 80px;
     display: flex;
-    align-items: center; /* Centra verticalmente */
-    padding: 0 20px; /* Espaciado a los lados */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para profundidad */
-    z-index: 1000; /* Se mantiene sobre otros elementos */
-}
-
-/* Contenedor del logo */
-
-
-/* Estilos para la imagen del logo */
-.imagenBarber img { 
-    width: 12%; /*Ajusta el tamaño de la imagen */
-    height: auto; /* Mantiene la proporción */
-    border-radius: 15%; /*Bordes redondeados (opcional)*/
-}
-
-/* Contenedor interno para los elementos */
-.navbar-content {
-    flex: 1; /* Ocupa todo el espacio restante */
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+  }
+  
+  .imagenBarber {
     display: flex;
-    justify-content: center; /* Centra horizontalmente los elementos */
-    gap: 30px; /* Espaciado entre elementos */
-}
-
-/* Estilos para cada enlace */
-.link{
+    align-items: center;
+    width: 150px; /* Ajuste de tamaño para evitar que la imagen desplace otros elementos */
+  }
+  
+  .imagenBarber img {
+    height: auto;
+    width: 80%;
+  }
+  
+  .navbar-content {
+    display: flex;
+    gap: 40px;
+  }
+  
+  .link {
+    text-decoration: none;
     color: white;
-    font-size: 18px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .link:hover {
+    color: #f1c40f; /* Amarillo moderno */
+    transform: scale(1.1);
+  }
+  
+  .credenciales {
+    display: flex;
+    gap: 15px;
+    color: white;
     font-weight: bold;
     cursor: pointer;
-    padding: 10px 15px;
-    transition: color 0.3s ease;
-    text-decoration: none;
-}
-
-.link:hover {
-    color: #08f5fdf3; /*Cambia de color al pasar el mouse */
-    font-family: 'Roboto', sans-serif; 
-}
-
-/* Responsividad: Ajustes para pantallas pequeñas */
-@media (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-        height: auto;
-        padding: 10px;
-    }
-    
-    .navbar-content {
-        flex-direction: column;
-        gap: 10px;
-        margin-top: 10px;
-    }
-
-    .imagenBarber img {
-        height: 30px;
-    }
-}
+  }
+  
+  .credenciales label:hover {
+    color: #e74c3c; /* Rojo moderno */
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+  
