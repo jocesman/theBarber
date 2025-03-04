@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import AuthForm from './components/Authform/AuthForm';
 import RegForm from './components/RegForm/RegForm';
@@ -9,30 +9,33 @@ import Appointments from './views/Appointments';
 import Services from './views/Servicios';
 import Contacto from './components/Contacto';
 
+
 function App() {
 
   const location = useLocation();
 
   // Rutas donde NO se debe mostrar la NavBar
-  const hideNavBarRoutes = ['/', '/CrearCuenta', '/RecuperarContrasena'];
+  const hideNavBarRoutes = ['/login', '/CrearCuenta', '/RecuperarContrasena'];
   const shouldShowNavBar = !hideNavBarRoutes.includes(location.pathname);
 
-  return (
-    <div className='App'>
-      {shouldShowNavBar && <NavBar />}
+ return (
+  <div className='App'>
+    {shouldShowNavBar && <NavBar />}
 
-      <Routes>
-        <Route path="/" element={<AuthForm />} />
-        <Route path='/CrearCuenta' element={<RegForm />} />
-        <Route path='/RecuperarContrasena' element={<RecuperarPass />} />
-        <Route path='/QuienesSomos' element={<Home />} />
-        <Route path='/turnos' element={<Appointments />} />
-        <Route path='/servicios' element={<Services />} />
-        <Route path='/contacto' element={<Contacto />} />
-        <Route path='*' element={<ErrorPage />} />  
-      </Routes>
-    </ div>
-  )
+    <Routes>
+      <Route path="/" element={<Navigate to="/login" replace />} />
+      <Route path="/login" element={<AuthForm />} />
+      <Route path='/CrearCuenta' element={<RegForm />} />
+      <Route path='/RecuperarContrasena' element={<RecuperarPass />} />
+      <Route path='/QuienesSomos' element={<Home />} />
+      <Route path='/turnos' element={<Appointments />} />
+      <Route path='/servicios' element={<Services />} />
+      <Route path='/contacto' element={<Contacto />} />
+      <Route path='*' element={<ErrorPage />} />  
+    </Routes>
+  </ div>
+)
 }
 
 export default App;
+

@@ -18,8 +18,7 @@ function NavBar() {
       </div>
       <div className="credenciales">
         <label>Usuario</label>
-        <label onClick={() => navigate('/')}>Salir</label>
-
+        <label onClick={() => navigate('/login')}>Salir</label>
       </div>
     </div>
   );

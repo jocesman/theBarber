@@ -1,7 +1,7 @@
 import '../../css/RegForm.css';
 import RodilloBarberia from '../../Images/RodilloBarberia.png';
 import { useFormik } from 'formik';
-import Schema from './Schema';
+import Schema from './Schema.js';
 import { useNavigate } from 'react-router-dom';
 import createUser from './CreateUser.jsx';
 
@@ -32,6 +32,7 @@ const RegForm = () => {
 
   return (
     <div className="form-container">
+      <div className="cuadrado">
       <form onSubmit={handleSubmit} onReset={handleReset} className="reg-form">
         <div className="form-header">
            <img src={RodilloBarberia} alt="Imagen The Barber"/>
@@ -177,13 +178,12 @@ const RegForm = () => {
           <button type="reset" className="btn btn-secondary" onClick={handleReset}>
             Limpiar Formulario
           </button>
-          <button type="button" className="btn btn-cancel" onClick={() => navigate('/')}>
+          <button type="button" className="btn btn-cancel" onClick={() => navigate('/login')}>
             Cancelar Registro
           </button>
         </div>
-
-      </form>
-    </div>
+      </form> 
+    </div></div>
   );
 };
 

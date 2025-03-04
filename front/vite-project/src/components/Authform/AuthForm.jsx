@@ -18,7 +18,7 @@ const AuthForm = () => {
     onSubmit: async (values) => {
       const isValid = await validarUsuario(values);
       if (isValid) {
-        navigate('/navbar'); // Ajusta esta ruta según tu estructura
+        navigate('/turnos');
       }
     }
   });

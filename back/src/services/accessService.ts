@@ -1,5 +1,4 @@
 import { AppDataSource } from "../config/data-source";
-import AccessDto from "../dto/AccessDto";
 import { AccessControl } from "../entities/AccessControl";
 import { Users } from "../entities/Users";
 import { encriptar } from "../middlewares/encriptacion";
@@ -27,8 +26,6 @@ export const getAccessService = async (credentials: AccessControl) => {
     if (access?.accessUserPassword === pass)  return true;
     else return false;
 };
-//audy ywby yzvs hdbu
-
 
 export const recuperarAccessService = async (email: string): Promise<void> => {
 
