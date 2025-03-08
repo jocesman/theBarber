@@ -2,9 +2,13 @@ import '../css/NavBar.css';
 import TheBarber from '../Images/TheBarber.png';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { UserContext } from '../contexts/UserProvider';
 
 function NavBar() {
   const navigate = useNavigate();
+  const { usuario, logout } = useContext(UserContext);
+
   return (
     <div className="navbar">
       <div className="imagenBarber">
@@ -17,8 +21,8 @@ function NavBar() {
         <Link className="link" to="/contacto">CONTACTO</Link>
       </div>
       <div className="credenciales">
-        <label>Usuario</label>
-        <label onClick={() => navigate('/login')}>Salir</label>
+        <label>Usuario: {usuario.userName + ' ' + usuario.userLastName}</label>
+        <label onClick={logout}>Salir</label>
       </div>
     </div>
   );

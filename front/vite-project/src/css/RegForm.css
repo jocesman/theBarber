@@ -159,8 +159,8 @@ h6 {
   border-radius: 10px;
 }
 
-/* Responsive design */
-@media (max-width: 640px) {
+
+@media (max-width: 932px) {
   .form-container {
     margin: 1rem;
     padding: 1rem;
@@ -171,13 +171,15 @@ h6 {
   }
 
   .btn {
-    width: 100%;
+
+    display: flex;
+    flex-wrap: wrap;
   }
 }
 
 p .errorMessage {
   color: #960f0f;
-  font-size: 12px;
+  font-size: 12px;  
   margin-top: 0rem;
 }
 

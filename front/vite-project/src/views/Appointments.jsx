@@ -16,8 +16,6 @@ const Appointments = () => {
     // .catch(err => console.log(err));
   }, []);
 
-  console.log('>>>>>>>>>>>>>>>>>>', turno);
-
   return (
     <>
       <h2>Listado de tus turnos</h2>

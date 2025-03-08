@@ -4,10 +4,13 @@ import Schema from './Schema'
 import { useFormik } from 'formik';
 import validarUsuario  from './ValidarUsuario';
 import { Link, useNavigate } from "react-router-dom";
+import { useContext } from 'react';
+import { UserContext } from '../../contexts/UserProvider';
 
 const AuthForm = () => {
 
   const navigate = useNavigate();
+  const { getUser } = useContext(UserContext);
 
   const {handleSubmit, handleChange, errors, values} = useFormik({
     initialValues: {
@@ -18,6 +21,8 @@ const AuthForm = () => {
     onSubmit: async (values) => {
       const isValid = await validarUsuario(values);
       if (isValid) {
+        //Aqui voy a llenar el contexto
+        getUser(values.phone);
         navigate('/turnos');
       }
     }
