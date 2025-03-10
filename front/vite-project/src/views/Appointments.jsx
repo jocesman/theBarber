@@ -2,6 +2,7 @@ import CajaAppointments from '../components/CajaAppointments.jsx';
 import '../css/Appointments.css';
 import { useContext, useState } from 'react';
 import { UserContext } from '../contexts/UserProvider';
+import Swal from 'sweetalert2';
 
 const Appointments = () => {
   const { usuario, createAppointment } = useContext(UserContext);
@@ -49,7 +50,12 @@ const Appointments = () => {
   const agendarTurno = async () => {
     const phone = usuario.userPhone;
     await createAppointment (phone, fecha, hora);
-    alert(`Turno agendado para el ${fecha} a las ${hora}`);
+    Swal.fire({
+      title: "Turno Agendado",
+      text: `Tu turno ha sido agendado para el ${fecha} a las ${hora}`,
+      icon: "success",
+      confirmButtonText: "OK"
+    });
     toggleFormulario();
   };
 
@@ -101,7 +107,7 @@ const Appointments = () => {
           </div>
       )}
       
-      <div className='turnos-grid'>
+      <div className='turnos-flex'>
         {userTurnos.map((turno) => (
           <CajaAppointments key={turno.appointment} turno={turno} />
         ))}

@@ -4,11 +4,12 @@
   /* Contenedor de tarjetas de turnos */
   
   
-  /* Estilos de cada tarjeta */
+  /* Estilos de cada tarjeta */ 
   .card {
     background-color: #f1062515;
     border-radius: 8px;
     box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.1);
+    width: 18%;
     padding: 15px;
     text-align: center;
     border: 1px solid #120236;

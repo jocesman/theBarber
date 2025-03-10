@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 export const UserContext = createContext(null);
 
@@ -28,16 +29,50 @@ const UserProvider = ({ children }) => {
     }
 
     const modifyAppointment = async (id) => {
-      await axios.put(`http://localhost:8080/turns/${id}`)
-      .then(res => res.data)
-      console.log('este es el turno modificado', id)
-      .catch(err => console.log(err));
-
-
-        // await axios.patch(`http://localhost:8080/appointments/${appointment.id}`, appointment)
-        // .then(res => console.log(res.data))
-        // .catch(err => console.log(err));
-    }
+      Swal.fire({
+          title: "¿Estás seguro?",
+          text: "Esta acción cancelará tu turno y no se podrá revertir.",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Sí, cancelar",
+          cancelButtonText: "No, mantener",
+          confirmButtonColor: "#d33",
+          cancelButtonColor: "#3085d6"
+      }).then(async (result) => {
+          if (result.isConfirmed) {
+              await axios.put(`http://localhost:8080/turns/${id}`)
+                  .then(res => {
+                      setUsuario(prevUsuario => {
+                          // Crear una copia del array de citas
+                          const updatedAppointments = prevUsuario.appointments.map(turno =>
+                              turno.appointment === id
+                                  ? { ...turno, appointmentStatus: "cancelled" }  // Modificar el turno específico
+                                  : turno
+                          );
+  
+                          return { ...prevUsuario, appointments: updatedAppointments };
+                      });
+  
+                      // Mostrar confirmación de cancelación
+                      Swal.fire({
+                          title: "Turno cancelado",
+                          text: "Tu turno ha sido cancelado exitosamente.",
+                          icon: "success",
+                          confirmButtonText: "OK"
+                      });
+                  })
+                  .catch(err => {
+                      console.log(err);
+                      Swal.fire({
+                          title: "Error",
+                          text: "Hubo un problema al cancelar el turno.",
+                          icon: "error",
+                          confirmButtonText: "Cerrar"
+                      });
+                  });
+          }
+      });
+  };
 
     const logout = () => {
         setUsuario([]);

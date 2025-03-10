@@ -38,9 +38,8 @@ const CajaAppointments = ({turno}) => {
                 <div className="cancelButton">
                     <button 
                     className='cancelar'
-                    disabled={appointmentStatus === 'canceled'}
-                    onClick={() => {
-                        console.log(appointment)
+                    disabled={appointmentStatus === 'cancelled'}
+                    onClick={() => { 
                         modifyAppointment(appointment)
                     }}
                     // onClick={modifyAppointment(usuario.userPhone)}
