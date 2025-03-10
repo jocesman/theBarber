@@ -22,14 +22,12 @@ export const getAppointmentbyPhone = async (req: Request, res: Response) => {
 
 export const deleteAppointment = async (req: Request, res: Response) => {
     const appointment = await deleteAppointmentService(req.params.phone);
-    console.log(appointment);
     if (appointment.affected === 1) res.status(200).json({ message: "Turno eliminado" });
     else res.status(404).json({ message: "No se encontró ningún turno" });
 };
 
 export const modifyAppointment = async (req: Request, res: Response) => {
-    const appointment: Appointments | null = await modifyAppointmentService(req.params.phone, req.body);
-    console.log(appointment);
-    if (appointment) res.status(200).json({ message: "Turno modificado", "Turno": appointment })
+    const appointments: Appointments | null = await modifyAppointmentService(req.params.id);
+    if (appointments) res.status(200).json({ message: "Turno modificado", "Turno": appointments })
     else res.status(404).json({ message: "No se encontró ningún turno" });
 };

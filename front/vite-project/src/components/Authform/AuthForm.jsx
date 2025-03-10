@@ -22,7 +22,7 @@ const AuthForm = () => {
       const isValid = await validarUsuario(values);
       if (isValid) {
         //Aqui voy a llenar el contexto
-        getUser(values.phone);
+        await getUser(values.phone)
         navigate('/turnos');
       }
     }

@@ -1,5 +1,6 @@
 import { AppDataSource } from "../config/data-source";
 import { Appointments } from "../entities/Appointments";
+import { appointment1 } from "../helpers/appointmetLoadData";
 import AppointmentRepository from "../repositories/AppointmentRepository";
 import UserRepository from "../repositories/UserRepositry";
 
@@ -39,10 +40,19 @@ export const deleteAppointmentService = async(phone: string): Promise<any> => {
     return await AppointmentRepository.delete({ appointmentUserPhone: phone });
 };
 
-export const modifyAppointmentService = async(phone: string, appointmentData: Appointments): Promise<Appointments | null> => {
-    let appointment = await AppointmentRepository.findOneBy({ appointmentUserPhone: phone });
-    if (!appointment) return null;
-    await AppointmentRepository.merge(appointmentData);
-    appointment = await AppointmentRepository.save(appointmentData);
-    return appointment;
+export const modifyAppointmentService = async(id: string): Promise<Appointments | null> => {
+    let appointments= await AppointmentRepository.findOneBy({ appointment: parseInt(id)  });
+    if (!appointments) return null;
+    appointments.appointmentStatus = 'cancelled';
+    await AppointmentRepository.merge(appointments);
+    appointments = await AppointmentRepository.save(appointments);
+    return appointments;
 };
+
+// export const modifyAppointmentService = async(phone: string, appointmentData: Appointments): Promise<Appointments | null> => {
+//     let appointment = await AppointmentRepository.findOneBy({ appointmentUserPhone: phone });
+//     if (!appointment) return null;
+//     await AppointmentRepository.merge(appointmentData);
+//     appointment = await AppointmentRepository.save(appointmentData);
+//     return appointment;
+// };

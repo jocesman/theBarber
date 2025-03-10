@@ -9,7 +9,7 @@ appointmentRouter.get("/", getAppointment);
 appointmentRouter.get("/:phone", getAppointmentbyPhone);
 appointmentRouter.post("/:phone", createAppointment);
 appointmentRouter.delete("/:phone", deleteAppointment); //borrar posteriormente, se va a usar un PUT
-appointmentRouter.put("/:phone", modifyAppointment);
+appointmentRouter.put("/:id", modifyAppointment);
 
 export default appointmentRouter;
 
