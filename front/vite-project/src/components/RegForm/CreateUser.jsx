@@ -32,7 +32,8 @@ const createUser = async (values, navigate) => {
         icon: 'success',
         title: 'Usuario Creado',
         html: `El usuario ${values.name} ${values.lastname} ha sido creado exitosamente<br><br>
-              Hemos enviado un mensaje de Bienvenida y de confirmación al correo electrónico: <strong>${values.email}</strong>`,
+              Hemos enviado un mensaje de Bienvenida y de confirmación al correo electrónico: <strong>${values.email}</strong><br>
+              (Si no aparece en su bandeja de entrada, revise su carpeta de spam)`,
         confirmButtonText: 'Aceptar',
       }).then(() => {
         navigate("/"); // Si el usuario es creado, se redirige al login

@@ -31,6 +31,7 @@ const Appointments = () => {
 
   const obtenerFechaMinima = () => {
     const hoy = new Date();
+    hoy.setDate(hoy.getDate() + 1);
     return hoy;
   };
 
@@ -51,14 +52,18 @@ const Appointments = () => {
 
   const agendarTurno = async () => {
     const phone = usuario.userPhone;
+    const email = usuario.userEmail;
     await createAppointment(phone, fecha.toISOString().split('T')[0], hora);
     Swal.fire({
       title: "Turno Agendado",
-      text: `The Barber le informa que su turno ha sido agendado para el ${fecha.toLocaleDateString("es-ES", {
+      html: `The Barber le informa que su turno ha sido agendado para el ${fecha.toLocaleDateString("es-ES", {
         day: "numeric",
         month: "long",
         year: "numeric",
-      })} a las ${hora}`,
+      })} a las ${hora}<br></br>
+      <p>Confirmaciòn de este turno a su email:</p>
+      <p><strong>${email}</strong></p><br>
+      <p style="font-size: 12px; color: red;"><i>(Si no ha recibido el email, compruebe su carpeta de spam o filtros de correo)</i></p>`,
       icon: "success",
       confirmButtonText: "OK"
     });
@@ -78,12 +83,14 @@ const Appointments = () => {
       </div>
       
       {mostrarFormulario && (
-        <div className='crearTurno'>
+        <div style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+        <div className='crearTurno' >
           <div>
-            <h3>Agenda de Nuevo Turno</h3>
+            <h3 style={{paddindBottom:'0px', margin:'2px 0px'}}>Agendando tu Nuevo Turno</h3>
+            <h3 style={{fontStyle:'italic',fontSize:'10px', padding:'0px', marginTop:'0px'}}>La Agenda está abierta para un mes</h3>
           </div>
-          <div>
-            <h4>Fecha:</h4>
+          <div style={{display:'flex', flexDirection:'row'}}>
+            <h4 style={{margin:'5px'}}>Fecha:</h4>
             <DatePicker
               selected={fecha}
               onChange={(date) => setFecha(date)}
@@ -91,21 +98,23 @@ const Appointments = () => {
               maxDate={obtenerFechaMaxima()}
               filterDate={filterWeekends}
               className="inputFecha"
+              placeholderText='Seleccione una fecha'
             />
           </div>
-          <div className="form-group">
-          </div>
-            <h4>Hora</h4>
+          <div style={{display:'flex', flexDirection:'row'}}>
+            <h4 style={{margin:'5px 5px 5px 15px'}}>Hora: </h4>
             <select
               value={hora}
               onChange={manejarCambioHora}
               className="inputHora"
+              style={{padding:'5px 15px 5px 25px'}}
             >
-              <option value="">Selecciona una hora</option>
+              <option value="">Seleccione una hora</option>
               {horasDisponibles.map((h, index) => (
                 <option key={index} value={h}>{h}</option>
               ))}
             </select>
+          </div>  
             <div className='botonesCrearTurno'>
               <button 
               className='btnCT Agendar' 
@@ -120,6 +129,7 @@ const Appointments = () => {
               <h5 style={{padding: '5px'}}>Nota: Los turnos se cancelan 24 horas antes de la cita.</h5>
             </div>
           </div>
+         </div> 
       )}
       <div className='turnos-flex'>
         {userTurnos.map((turno) => (

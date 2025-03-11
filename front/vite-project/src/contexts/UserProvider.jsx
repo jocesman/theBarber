@@ -54,7 +54,7 @@ const UserProvider = ({ children }) => {
                 title: "Turno agendado",
                 text: `Tu turno ha sido agendado para el ${fecha} a las ${hora} y se ha creado.`,
                 icon: "success",
-                confirmButtonText: "OK"
+                confirmButtonText: "OK" 
             });
     
             } catch (err) {
@@ -107,7 +107,7 @@ const UserProvider = ({ children }) => {
         if (diffInHours < 24) {
             Swal.fire({
                 title: "Cancelación no permitida",
-                html: `No puedes cancelar el turno: <strong>${turno.appointment}</strong><br> porque ya pasó la hora límite para cancelar la cita.<br><br>Solo puedes cancelar un turno hasta 24 horas antes dela cita.`,
+                html: `No puedes cancelar el turno: <strong>${turno.appointment}</strong><br> porque ya pasó la hora límite para cancelar la cita.<br><br>Solo puedes cancelar un turno hasta 24 horas antes de la cita.`,
                 icon: "warning",
                 confirmButtonText: "OK"
             });
@@ -141,7 +141,7 @@ const UserProvider = ({ children }) => {
                     // Mostrar confirmación de cancelación
                     Swal.fire({
                         title: "Turno cancelado",
-                        text: "Tu turno ha sido cancelado exitosamente.",
+                        html: 'Tu turno ha sido cancelado exitosamente <br><br>Confirmación de este turno CANCELADO en su email<br><br>(<i>Si no ha recibido el email, compruebe su carpeta de spam o filtros de correo)</i>',
                         icon: "success",
                         confirmButtonText: "OK"
                     });

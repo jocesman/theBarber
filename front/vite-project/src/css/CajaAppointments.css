@@ -20,8 +20,9 @@
     background-color: #f1062515;
     border-radius: 8px;
     box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.1);
-    width: 18%;
-    padding: 15px;
+    width: 17%;
+    height: auto;
+    padding: 10px;
     text-align: center;
     border: 1px solid #120236;
   }
@@ -69,7 +70,8 @@
   }
 
   .card:hover {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
     transform: translateY(-5px);
+    border: 3px solid #3d4701;
   }
   
