@@ -3,6 +3,8 @@ import '../css/Appointments.css';
 import { useContext, useState } from 'react';
 import { UserContext } from '../contexts/UserProvider';
 import Swal from 'sweetalert2';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const Appointments = () => {
   const { usuario, createAppointment } = useContext(UserContext);
@@ -10,32 +12,32 @@ const Appointments = () => {
 
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const [mostrarBotonCrear, setMostrarBotonCrear] = useState(true);
-  const [fecha, setFecha] = useState('');
-  const [hora, setHora] = useState ('');
+  const [fecha, setFecha] = useState(null); // Inicializa con null
+  const [hora, setHora] = useState('');
 
   const toggleFormulario = () => {
     setMostrarBotonCrear(!mostrarBotonCrear);
     setMostrarFormulario(!mostrarFormulario);
-    setFecha('');
+    setFecha(null); // Reinicia la fecha
     setHora('');
   }
   
   const manejarCancelar = () => {
     setMostrarFormulario(false);
     setMostrarBotonCrear(true);
-    setFecha('');
+    setFecha(null); // Reinicia la fecha
     setHora('');
   };
 
   const obtenerFechaMinima = () => {
-    const hoy = new Date().toISOString().split('T')[0];
+    const hoy = new Date();
     return hoy;
   };
 
   const obtenerFechaMaxima = () => {
     const hoy = new Date();
     hoy.setMonth(hoy.getMonth() + 1);
-    return hoy.toISOString().split('T')[0];
+    return hoy;
   };
 
   const horasDisponibles = [];
@@ -49,14 +51,23 @@ const Appointments = () => {
 
   const agendarTurno = async () => {
     const phone = usuario.userPhone;
-    await createAppointment (phone, fecha, hora);
+    await createAppointment(phone, fecha.toISOString().split('T')[0], hora);
     Swal.fire({
       title: "Turno Agendado",
-      text: `Tu turno ha sido agendado para el ${fecha} a las ${hora}`,
+      text: `The Barber le informa que su turno ha sido agendado para el ${fecha.toLocaleDateString("es-ES", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      })} a las ${hora}`,
       icon: "success",
       confirmButtonText: "OK"
     });
     toggleFormulario();
+  };
+
+  const filterWeekends = (date) => {
+    const day = date.getDay();
+    return day !== 0; // 0 es domingo
   };
 
   return (
@@ -72,16 +83,15 @@ const Appointments = () => {
             <h3>Agenda de Nuevo Turno</h3>
           </div>
           <div>
-
-          <h4>Fecha:</h4>
-          <input 
-            type='date' 
-            value={fecha} 
-            className='inputFecha'
-            onChange={(e) => setFecha(e.target.value)} 
-            min={obtenerFechaMinima()} 
-            max={obtenerFechaMaxima()} 
-          />
+            <h4>Fecha:</h4>
+            <DatePicker
+              selected={fecha}
+              onChange={(date) => setFecha(date)}
+              minDate={obtenerFechaMinima()}
+              maxDate={obtenerFechaMaxima()}
+              filterDate={filterWeekends}
+              className="inputFecha"
+            />
           </div>
           <div className="form-group">
           </div>
@@ -104,9 +114,13 @@ const Appointments = () => {
               >Agendar</button>
               <button className='btnCT CancelarCT' onClick={manejarCancelar}>Cancelar</button>
             </div>
+            <div>
+              <h5 style={{padding: '10px'}}>HORARIO DE ATENCIÓN</h5>    
+              <h5>Lunes a Sábado de 8:00 a 18:00</h5>
+              <h5 style={{padding: '5px'}}>Nota: Los turnos se cancelan 24 horas antes de la cita.</h5>
+            </div>
           </div>
       )}
-      
       <div className='turnos-flex'>
         {userTurnos.map((turno) => (
           <CajaAppointments key={turno.appointment} turno={turno} />
@@ -118,72 +132,3 @@ const Appointments = () => {
 
 export default Appointments;
 
-
-// import CajaAppointments from '../components/CajaAppointments.jsx';
-// import '../css/Appointments.css';
-// import { useContext } from 'react';
-// import { UserContext } from '../contexts/UserProvider';
-
-// const Appointments = () => {
-
-//   const { usuario } = useContext(UserContext);
-//   const userTurnos = usuario.appointments;
-
-//   return (
-//     <div className='containerAppointments'>
-//       <div className='h2button'>
-//         <h2>Listado de tus turnos</h2>
-//         <button className='crear'>Crear nuevo turno</button>
-//       </div>
-//       <div className='crearTurno'>
-
-//         </div>
-//       <div className='turnos-grid'>
-//         {
-//         userTurnos.map((turno) => (
-//            <CajaAppointments key={turno.appointment} turno={turno} />
-//            ))
-//         }
-//       </div>
-//     </div>
-//   )
-// }
-
-// export default Appointments;
-
-
-
-
-// import CajaAppointments from '../components/CajaAppointments';
-// import { useState, useEffect } from 'react';
-// import axios from 'axios';
-
-// const Appointments = () => {
-
-//   // const [turnos, setTurnos] = useState(Turnos || []);
-//   const [turno, setTurno] = useState([]);
-
-
-//   useEffect(() => {
-//     axios.get('http://localhost:8080/turns')
-//     // .then(res => res.json())
-//     .then(res => setTurno(res.data))
-//     // .catch(err => console.log(err));
-//   }, []);
-
-//   return (
-//     <>
-//       <h2>Listado de tus turnos</h2>
-//       <div>
-//       {
-//         turno.map((turno) => (
-//           <CajaAppointments key={turno.appointment} turno={turno} />
-//       ))
-      
-//       }
-//       </div>
-//     </>
-//   )
-// }
-
-// export default Appointments;

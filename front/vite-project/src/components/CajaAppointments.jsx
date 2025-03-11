@@ -22,14 +22,17 @@ const CajaAppointments = ({turno}) => {
         minute: "2-digit",
         hour12: true, // Activa el formato de 12 horas
     });
+
+    const statusClass = appointmentStatus === 'active' ? 'active-status' : 'cancelled-status';
+    const cardClass = appointmentStatus === 'active' ? 'active-card' : 'cancelled-card';
         
     return (
-            <div className='card'>
+        <div className={`card ${cardClass}`}>
                 <div className='header'>
                     <h3>Turno: {appointment}</h3>
                 </div>
                 <div className='body'>
-                    <h5>Estado: {appointmentStatus}</h5>
+                    <h5 className={statusClass}>Estado: {appointmentStatus.toUpperCase()}</h5>
                 </div>
                 <div className='body'>
                     <p>Fecha: {formattedDate}</p>
@@ -42,7 +45,6 @@ const CajaAppointments = ({turno}) => {
                     onClick={() => { 
                         modifyAppointment(appointment)
                     }}
-                    // onClick={modifyAppointment(usuario.userPhone)}
                     >Cancelar</button>
                 </div>
             </div>

@@ -50,17 +50,11 @@ const RecuperarPass = () => {
 
   return (
     <div className="container">
-      {/* Modal superpuesto */}
       <div className="modal">
-        {/* Logo a la izquierda (o arriba en móviles) */}
         <div className="containerLogo">
           <img src={TheBarber} alt="Logo The Barber" />
         </div>
-
-        {/* Formulario a la derecha (o abajo en móviles) */}
         <div className="authWrapper">
-          
-          {/* Formulario de Recuperación de Contraseña */}
           <div className="containerRecuperarPass">
             <h3 className='titleRecuperarContrasena'>Recuperar contraseña</h3>
             <form onSubmit={handleSubmit}>

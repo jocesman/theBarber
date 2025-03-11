@@ -1,10 +1,21 @@
-  
-  
-  
-  /* Contenedor de tarjetas de turnos */
-  
-  
-  /* Estilos de cada tarjeta */ 
+.card.active-card {
+  background-color: #0000ff15; /* Azul claro */
+  border: 1px solid #120236;
+}
+
+.card.cancelled-card {
+  background-color: #ffcccc; /* Rosado claro */
+  border: 1px solid #120236;
+}
+
+.active-status {
+  color: green;
+}
+
+.cancelled-status {
+  color: red;
+}
+
   .card {
     background-color: #f1062515;
     border-radius: 8px;
@@ -55,5 +66,10 @@
       width: 100%;
       text-align: center;
     }
+  }
+
+  .card:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    transform: translateY(-5px);
   }
   

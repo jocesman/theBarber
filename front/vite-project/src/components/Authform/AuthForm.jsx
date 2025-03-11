@@ -30,16 +30,11 @@ const AuthForm = () => {
 
   return (
     <div className="container">
-      {/* Modal superpuesto */}
       <div className="modal">
-        {/* Logo a la izquierda (o arriba en móviles) */}
         <div className="containerLogo">
           <img src={TheBarber} alt="Logo The Barber" />
         </div>
-
-        {/* Formulario a la derecha (o abajo en móviles) */}
         <div className="authWrapper">
-          {/* Formulario de Inicio de Sesión */}
           <div>
             <h3 className='titleIniciarSesion'>Iniciar Sesión</h3>
             <form onSubmit={handleSubmit} className="reg-form">

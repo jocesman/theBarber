@@ -31,10 +31,11 @@ const createUser = async (values, navigate) => {
       Swal.fire({
         icon: 'success',
         title: 'Usuario Creado',
-        text: `El usuario ${values.name} ${values.lastname} ha sido creado exitosamente`,
+        html: `El usuario ${values.name} ${values.lastname} ha sido creado exitosamente<br><br>
+              Hemos enviado un mensaje de Bienvenida y de confirmación al correo electrónico: <strong>${values.email}</strong>`,
         confirmButtonText: 'Aceptar',
       }).then(() => {
-        navigate("/"); // Si el usuario es creado, redirigir al login
+        navigate("/"); // Si el usuario es creado, se redirige al login
       });
     } catch (err) {
       Swal.fire({
