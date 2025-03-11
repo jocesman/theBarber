@@ -6,7 +6,7 @@ import UserRepository from "../repositories/UserRepositry";
 
 
 export const createtAppointmentService = async (phone: string, appointmentData: Appointments): Promise<Appointments | string> => {
-    
+
     const user = await UserRepository.findOne({ 
         where: { userPhone : phone } });
     if (user) {

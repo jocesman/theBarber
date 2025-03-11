@@ -18,8 +18,8 @@ function App() {
   const shouldShowNavBar = !hideNavBarRoutes.includes(location.pathname);
 
   return (
-    <div className='App'>
       <UserProvider>
+    <div className='App'>
           {shouldShowNavBar && <NavBar />}
           <Routes>
             <Route path="/" element={<Navigate to="/login" replace />} />
@@ -32,8 +32,8 @@ function App() {
             <Route path='/contacto' element={<Contacto />} />
             <Route path='*' element={<ErrorPage />} />  
           </Routes>
-      </UserProvider>
     </ div>
+      </UserProvider>
   )
 }
 

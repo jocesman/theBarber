@@ -6,7 +6,7 @@ export const createAppointment = async (req: Request, res: Response): Promise<vo
     const phone = req.params.phone;
     const appointment = req.body;
     const newAppointment = await createtAppointmentService(phone, appointment);
-    res.status(201).json(newAppointment);
+    res.status(201).json(newAppointment); 
 };
 
 export const getAppointment = async (req: Request, res: Response) => {
