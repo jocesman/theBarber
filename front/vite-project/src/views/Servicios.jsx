@@ -1,6 +1,19 @@
 import '../css/Servicios.css';
+import { useEffect, useContext } from 'react';
+import { UserContext } from '../contexts/UserProvider';
+import { useNavigate } from 'react-router-dom';
+
 
 const Servicios = () => {
+
+  const { usuario } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (usuario && Object.keys(usuario).length <= 0) {
+        navigate('/login');
+    }
+}, [usuario]);
 
   return (
     <>

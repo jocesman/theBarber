@@ -1,9 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import '../css/Contactos.css';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import { UserContext } from "../contexts/UserProvider";
+import { useNavigate } from 'react-router-dom';
+
 
 const Contacto = () => {
+
+    const { usuario } = useContext(UserContext);
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         nombre: '',
         email: '',
@@ -37,6 +44,12 @@ const Contacto = () => {
             });
         }
     };
+
+    useEffect(() => {
+        if (usuario && Object.keys(usuario).length <= 0) {
+            navigate('/login');
+        }
+    }, [usuario]);
 
     return (
         <div className="contacto-container">

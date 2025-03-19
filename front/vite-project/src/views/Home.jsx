@@ -1,6 +1,18 @@
 import '../css/Home.css';
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useContext } from 'react';
+import { UserContext } from '../contexts/UserProvider';
+
 
 const Home = () => {
+  const { usuario } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+          if (usuario && Object.keys(usuario).length <= 0) {
+              navigate('/login');
+          }
+      }, [usuario]);
   return (
         <>
         <div className="welcome-section">

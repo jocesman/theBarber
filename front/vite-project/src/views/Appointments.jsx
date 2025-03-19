@@ -1,13 +1,15 @@
 import CajaAppointments from '../components/CajaAppointments.jsx';
 import '../css/Appointments.css';
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../contexts/UserProvider';
 import Swal from 'sweetalert2';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { useNavigate } from 'react-router-dom';
 
 const Appointments = () => {
   const { usuario, createAppointment } = useContext(UserContext);
+  const navigate = useNavigate();
   const userTurnos = usuario.appointments;
 
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
@@ -75,6 +77,12 @@ const Appointments = () => {
     return day !== 0; // 0 es domingo
   };
 
+  useEffect(() => {
+    if (usuario && Object.keys(usuario).length <= 0) {
+        navigate('/login');
+    }
+}, [usuario]);
+
   return (
     <div className='containerAppointments'>
       <div className='h2button'>
@@ -132,7 +140,7 @@ const Appointments = () => {
          </div> 
       )}
       <div className='turnos-flex'>
-        {userTurnos.map((turno) => (
+        {Object.keys(usuario).length > 0 && userTurnos.map((turno) => (
           <CajaAppointments key={turno.appointment} turno={turno} />
         ))}
       </div>
